@@ -126,8 +126,13 @@ footer .wrap{padding-block:24px 40px;color:var(--muted);font-size:.88rem;display
   <div class="board">
     <div class="board-top">
       <span class="live" id="live"><span class="dot"></span><span id="live-text">Loading updates…</span></span>
-      <label class="live"><input type="checkbox" id="show-past"> Show past items</label>
+      <span class="live"><label class="live"><input type="checkbox" id="show-past"> Show past items</label><button class="del" type="button" id="staff-btn" style="color:var(--link)">Staff sign in</button></span>
     </div>
+    <form class="composer" id="login" hidden>
+      <label for="f-token">Staff code<input id="f-token" type="password" autocomplete="current-password" required></label>
+      <button class="btn" type="submit">Sign in</button>
+      <p class="note" id="login-msg" role="status"></p>
+    </form>
     <ul class="posts" id="posts"><li class="empty">Loading updates…</li></ul>
     <form class="composer" id="composer" hidden>
       <strong>Post an update (CGE staff)</strong>
@@ -141,7 +146,7 @@ footer .wrap{padding-block:24px 40px;color:var(--muted);font-size:.88rem;display
       <button class="btn" type="submit">Publish update</button>
       <p class="note" id="f-msg" role="status"></p>
     </form>
-    <p class="note" id="repo-note" hidden style="padding:0 16px 14px">To add an update on the static site, edit <code>data/announcements.json</code> in the repository.</p>
+    <p class="note" id="repo-note" hidden style="padding:0 16px 14px">Showing saved updates. Run the backend server to post updates from this page.</p>
   </div>
 </section>
 
@@ -339,8 +344,10 @@ document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{
 $("#church-q").addEventListener("input",renderChurches);
 renderChurches();
 
-// Updates board: live shared store when available, else data/announcements.json
-let posts=[],canPost=false,db=null;
+// Updates board: talks to the backend API (/api); falls back to data/announcements.json when no backend is running.
+const API="api";
+let posts=[],canPost=false,token="",es=null;
+try{token=sessionStorage.getItem("cge-staff-token")||"";}catch(e){}
 const today=new Date().toISOString().slice(0,10);
 function fmt(d){const x=new Date(d+"T12:00:00");if(isNaN(x))return{m:"",d:esc(d)};return{m:x.toLocaleString("en-US",{month:"short"}),d:x.getDate()+"<small>"+x.getFullYear()+"</small>"};}
 function renderPosts(){
@@ -350,47 +357,65 @@ function renderPosts(){
     return `<li class="post${String(p.date)<today?" past":""}"><time datetime="${esc(p.date)}">${f.m} ${f.d}</time>
     <div class="body"><span class="tag ${esc(p.category)}">${esc(p.category||"Notice")}</span><strong>${esc(p.title)}</strong>
     ${p.body?`<p>${esc(p.body)}</p>`:""}${link?`<p><a href="${esc(link)}" target="_blank" rel="noopener">Details ↗</a></p>`:""}</div>
-    ${canPost&&p._id?`<button class="del" type="button" data-id="${esc(p._id)}">Remove</button>`:""}</li>`;}).join("")
+    ${canPost&&p.id?`<button class="del" type="button" data-id="${esc(p.id)}">Remove</button>`:""}</li>`;}).join("")
     :`<li class="empty">No upcoming updates right now. Check back soon${canPost?", or post the first one below":""}.</li>`;
 }
-$("#show-past").addEventListener("change",renderPosts);
-$("#posts").addEventListener("click",async e=>{
-  const b=e.target.closest(".del");if(!b||!db)return;
-  if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="Confirm remove";return;}
-  b.disabled=true;try{await db.collection("announcements").doc(b.dataset.id).delete();}catch(err){b.textContent="Couldn't remove";}
-});
 function setLive(on,text){$("#live").classList.toggle("on",on);$("#live-text").textContent=text;}
+const auth=()=>({"Authorization":"Bearer "+token});
 
 async function loadStatic(){
   try{const r=await fetch("data/announcements.json",{cache:"no-store"});posts=await r.json();setLive(false,"Updated from site data");}
   catch(e){posts=[];setLive(false,"Updates unavailable");}
-  $("#repo-note").hidden=false;renderPosts();
+  $("#repo-note").hidden=false;$("#staff-btn").hidden=true;renderPosts();
+}
+function subscribe(){
+  if(!window.EventSource)return;
+  es=new EventSource(API+"/announcements/stream");
+  es.onmessage=ev=>{try{posts=JSON.parse(ev.data);setLive(true,"Live · updates appear automatically");renderPosts();}catch(e){}};
+  es.onerror=()=>setLive(false,"Reconnecting…");
+}
+async function checkStaff(){
+  if(!token){canPost=false;}
+  else{try{const r=await fetch(API+"/session",{headers:auth()});canPost=r.ok;}catch(e){canPost=false;}
+    if(!canPost){token="";try{sessionStorage.removeItem("cge-staff-token");}catch(e){}}}
+  $("#composer").hidden=!canPost;$("#staff-btn").textContent=canPost?"Sign out":"Staff sign in";renderPosts();
+  return canPost;
 }
 async function boot(){
-  const use=window.claude&&window.claude.use;
-  if(!use){return loadStatic();}
-  try{db=await window.claude.use("db");}catch(e){db=null;}
-  if(!db){return loadStatic();}
-  let user=null;try{user=await window.claude.use("user");}catch(e){}
-  try{canPost=!!(user&&user.canEdit&&await user.canEdit());}catch(e){canPost=false;}
-  $("#composer").hidden=!canPost;
-  const timer=setTimeout(()=>{if(!posts.length)setLive(false,"Still connecting…");},10000);
-  db.collection("announcements").onSnapshot(snap=>{
-    clearTimeout(timer);
-    posts=snap.docs.map(d=>Object.assign({_id:d.id},d.data()));
-    setLive(true,"Live · updates appear automatically");renderPosts();
-  },err=>{clearTimeout(timer);setLive(false,"Couldn't load live updates");});
+  try{const r=await fetch(API+"/announcements",{cache:"no-store"});if(!r.ok)throw 0;posts=await r.json();}
+  catch(e){return loadStatic();}
+  setLive(true,"Live · updates appear automatically");renderPosts();subscribe();checkStaff();
 }
+$("#show-past").addEventListener("change",renderPosts);
+$("#staff-btn").addEventListener("click",()=>{
+  if(canPost){token="";try{sessionStorage.removeItem("cge-staff-token");}catch(e){}checkStaff();return;}
+  const f=$("#login");f.hidden=!f.hidden;if(!f.hidden)$("#f-token").focus();
+});
+$("#login").addEventListener("submit",async e=>{
+  e.preventDefault();token=$("#f-token").value.trim();
+  const ok=await checkStaff();
+  $("#login-msg").textContent=ok?"":"That staff code didn't work. Check it with the site administrator.";
+  if(ok){try{sessionStorage.setItem("cge-staff-token",token);}catch(e){}e.target.reset();e.target.hidden=true;}
+});
+$("#posts").addEventListener("click",async e=>{
+  const b=e.target.closest(".del");if(!b||!canPost)return;
+  if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="Confirm remove";return;}
+  b.disabled=true;
+  try{const r=await fetch(API+"/announcements/"+encodeURIComponent(b.dataset.id),{method:"DELETE",headers:auth()});if(!r.ok)throw 0;}
+  catch(err){b.disabled=false;b.textContent="Couldn't remove";}
+});
 $("#f-date").value=today;
 $("#composer").addEventListener("submit",async e=>{
-  e.preventDefault();if(!db)return;
+  e.preventDefault();if(!canPost)return;
   const msg=$("#f-msg");const link=$("#f-link").value.trim();
   if(link&&!safeUrl(link)){msg.textContent="Links must start with https://";return;}
-  const data={title:$("#f-title").value.trim(),date:$("#f-date").value,category:$("#f-cat").value,body:$("#f-body").value.trim(),link,createdAt:new Date().toISOString()};
+  const data={title:$("#f-title").value.trim(),date:$("#f-date").value,category:$("#f-cat").value,body:$("#f-body").value.trim(),link};
   if(!data.title||!data.date){msg.textContent="Add a title and a date.";return;}
   msg.textContent="Publishing…";
-  try{await db.collection("announcements").add(data);msg.textContent="Published. Everyone viewing the guide now sees it.";e.target.reset();$("#f-date").value=today;}
-  catch(err){msg.textContent="Couldn't publish: "+(err&&err.message||"permission denied")+". Only CGE editors can post.";}
+  try{const r=await fetch(API+"/announcements",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},auth()),body:JSON.stringify(data)});
+    const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Request failed");
+    msg.textContent="Published. Everyone viewing the guide now sees it.";e.target.reset();$("#f-date").value=today;}
+  catch(err){msg.textContent="Couldn't publish: "+err.message;}
 });
 boot();
 })();

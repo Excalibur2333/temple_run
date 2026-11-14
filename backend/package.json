@@ -1,0 +1,9 @@
+{
+  "name": "waco-family-guide-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Serves the Waco Family Guide frontend and its announcements API",
+  "main": "server.js",
+  "engines": { "node": ">=18" },
+  "scripts": { "start": "node server.js" }
+}
