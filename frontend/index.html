@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- ARTIFACT-START -->
+<title>Waco Family Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: green masthead band, then a single 1080px column; sections separated by space, not boxes. Cards only for resource links. */
+:root{
+  --bg:#f6f8f5; --surface:#ffffff; --ink:#18241d; --muted:#55645b; --line:#d9e2db;
+  --green:#154734; --green-ink:#ffffff; --gold:#e8a917; --gold-soft:#fdf3d6; --link:#1d5c43;
+  --chip:#e7efe9; --chip-on:#154734; --chip-on-ink:#fff; --danger:#a3302a;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1712; --surface:#16211a; --ink:#e6eee8; --muted:#9db0a3; --line:#2a3a30;
+  --green:#123c2c; --green-ink:#f1f6f2; --gold:#f2bd3d; --gold-soft:#3a3115; --link:#8fd3ad;
+  --chip:#1f2e25; --chip-on:#f2bd3d; --chip-on-ink:#1a1405; --danger:#ef8a83; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1712; --surface:#16211a; --ink:#e6eee8; --muted:#9db0a3; --line:#2a3a30;
+  --green:#123c2c; --green-ink:#f1f6f2; --gold:#f2bd3d; --gold-soft:#3a3115; --link:#8fd3ad;
+  --chip:#1f2e25; --chip-on:#f2bd3d; --chip-on-ink:#1a1405; --danger:#ef8a83; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body)}
+a{color:var(--link)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.mast{background:var(--green);color:var(--green-ink)}
+header.mast .wrap{padding-block:28px 32px;display:grid;gap:18px}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.08}
+h1 .zh{display:block;font-family:var(--body);font-weight:600;font-size:.42em;opacity:.85;margin-top:8px}
+.lede{max-width:62ch;margin:0;opacity:.92}
+nav.jump{display:flex;flex-wrap:wrap;gap:8px}
+nav.jump a{color:var(--green-ink);text-decoration:none;border:1px solid rgba(255,255,255,.35);padding:6px 12px;border-radius:999px;font-weight:600;font-size:.92rem}
+nav.jump a:hover{background:rgba(255,255,255,.12)}
+main .wrap{display:grid;gap:56px;padding-block:40px 64px}
+section{display:grid;gap:18px}
+.sec-head{display:grid;gap:4px}
+h2{font-size:clamp(1.5rem,3vw,2rem)}
+h2 .zh{font-family:var(--body);font-weight:600;font-size:.6em;color:var(--muted);margin-left:8px}
+.sec-head p{margin:0;color:var(--muted);max-width:68ch}
+h3{font-size:1.12rem}
+.group{display:grid;gap:10px}
+.group > h3{font-family:var(--body);font-weight:700;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.card a.t{font-weight:700;text-decoration:none;color:var(--ink)}
+.card a.t:hover{color:var(--link);text-decoration:underline}
+.card p{margin:0;color:var(--muted);font-size:.95rem}
+.src{font-size:.78rem;color:var(--muted)}
+/* contact strip */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 24px;background:var(--gold-soft);border-radius:10px;padding:16px 18px}
+.contact div{min-width:0}
+.contact b{display:block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.contact span{user-select:all;overflow-wrap:anywhere}
+/* updates board */
+.board{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.board-top{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)}
+.live{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--muted)}
+.live.on .dot{background:#2e9d5b;box-shadow:0 0 0 4px rgba(46,157,91,.18)}
+.posts{list-style:none;margin:0;padding:0}
+.post{display:grid;grid-template-columns:84px 1fr auto;gap:4px 16px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.post:last-child{border-bottom:0}
+.post time{font-variant-numeric:tabular-nums;font-weight:700;color:var(--green);line-height:1.2}
+:root[data-theme="dark"] .post time{color:var(--gold)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .post time{color:var(--gold)}}
+.post time small{display:block;font-weight:400;color:var(--muted)}
+.post .body{min-width:0}
+.post .body p{margin:2px 0 0;color:var(--muted)}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--chip);border-radius:4px;padding:1px 6px;margin-right:6px;vertical-align:2px}
+.tag.Urgent{background:var(--danger);color:#fff}
+.post.past{opacity:.6}
+.del{background:none;border:1px solid var(--line);color:var(--danger);border-radius:6px;padding:2px 8px;cursor:pointer;font:inherit;font-size:.82rem;align-self:start}
+.empty{padding:22px 16px;color:var(--muted)}
+.composer{border-top:1px solid var(--line);padding:16px;display:grid;gap:10px;background:var(--bg)}
+.composer .row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}
+.composer label{display:grid;gap:3px;font-size:.85rem;font-weight:600;min-width:0}
+.composer input,.composer select,.composer textarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);width:100%}
+.btn{font:inherit;font-weight:700;background:var(--green);color:var(--green-ink);border:0;border-radius:8px;padding:9px 16px;cursor:pointer;justify-self:start}
+.note{font-size:.88rem;color:var(--muted);margin:0}
+/* churches */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{font:inherit;font-size:.92rem;font-weight:600;border:0;background:var(--chip);color:var(--ink);padding:6px 14px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink)}
+.search{font:inherit;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);min-width:0;flex:1 1 200px;max-width:320px}
+.church .meta{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-size:.75rem;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--chip)}
+.pill.lang{background:var(--gold-soft)}
+.criteria{font-size:.92rem;color:var(--muted);border-left:3px solid var(--gold);padding-left:12px;margin:0;max-width:72ch}
+footer{border-top:1px solid var(--line)}
+footer .wrap{padding-block:24px 40px;color:var(--muted);font-size:.88rem;display:grid;gap:6px}
+@media (max-width:640px){
+  .composer .row{grid-template-columns:1fr}
+  .post{grid-template-columns:64px 1fr}
+  .post .del{grid-column:2;justify-self:start}
+}
+@media (prefers-reduced-motion:no-preference){.card{transition:border-color .15s}.card:hover{border-color:var(--gold)}}
+</style>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="eyebrow">Center for Global Engagement · Baylor University</div>
+    <h1>Waco Family Guide<span class="zh">教职员家属资源指南 · For spouses &amp; dependents of Baylor faculty</span></h1>
+    <p class="lede">Campus benefits, immigration help, schools, health care, everyday services and local churches in one place. Start with the updates board for what is happening now.</p>
+    <nav class="jump" aria-label="Sections">
+      <a href="#updates">Updates</a><a href="#campus">On campus</a><a href="#community">In Waco</a><a href="#churches">Churches</a><a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main><div class="wrap">
+
+<section id="updates" aria-labelledby="h-updates">
+  <div class="sec-head">
+    <h2 id="h-updates">Updates board <span class="zh">最新通知</span></h2>
+    <p>Events, deadlines and notices from CGE staff. New posts appear here for everyone as soon as they are published.</p>
+  </div>
+  <div class="board">
+    <div class="board-top">
+      <span class="live" id="live"><span class="dot"></span><span id="live-text">Loading updates…</span></span>
+      <span class="live"><label class="live"><input type="checkbox" id="show-past"> Show past items</label><button class="del" type="button" id="staff-btn" style="color:var(--link)">Staff sign in</button></span>
+    </div>
+    <form class="composer" id="login" hidden>
+      <label for="f-token">Staff code<input id="f-token" type="password" autocomplete="current-password" required></label>
+      <button class="btn" type="submit">Sign in</button>
+      <p class="note" id="login-msg" role="status"></p>
+    </form>
+    <ul class="posts" id="posts"><li class="empty">Loading updates…</li></ul>
+    <form class="composer" id="composer" hidden>
+      <strong>Post an update (CGE staff)</strong>
+      <div class="row">
+        <label for="f-title">Title<input id="f-title" required maxlength="140"></label>
+        <label for="f-date">Date<input id="f-date" type="date" required></label>
+        <label for="f-cat">Type<select id="f-cat"><option>Event</option><option>Deadline</option><option>Notice</option><option>Urgent</option></select></label>
+      </div>
+      <label for="f-body">Details<textarea id="f-body" rows="2" maxlength="600"></textarea></label>
+      <label for="f-link">Link (optional)<input id="f-link" type="url" placeholder="https://"></label>
+      <button class="btn" type="submit">Publish update</button>
+      <p class="note" id="f-msg" role="status"></p>
+    </form>
+    <p class="note" id="repo-note" hidden style="padding:0 16px 14px">Showing saved updates. Run the backend server to post updates from this page.</p>
+  </div>
+</section>
+
+<section id="campus" aria-labelledby="h-campus">
+  <div class="sec-head">
+    <h2 id="h-campus">On-campus resources <span class="zh">校内资源</span></h2>
+    <p>Gathered from Baylor's official websites (Center for Global Engagement, Human Resources, Spiritual Life, Campus Recreation). Eligibility rules change, so follow each link for the current policy.</p>
+  </div>
+  <div id="campus-groups"></div>
+</section>
+
+<section id="community" aria-labelledby="h-community">
+  <div class="sec-head">
+    <h2 id="h-community">In Waco <span class="zh">校外资源</span></h2>
+    <p>Public services and community programs that new families most often need in their first months.</p>
+  </div>
+  <div id="community-groups"></div>
+</section>
+
+<section id="churches" aria-labelledby="h-churches">
+  <div class="sec-head">
+    <h2 id="h-churches">Churches in Waco <span class="zh">韦科教会</span></h2>
+    <p>Baptist and non-denominational congregations drawn from Baylor Spiritual Life's local church list.</p>
+  </div>
+  <p class="criteria">Selection: congregations Baylor Spiritual Life lists for the Waco area, limited to Baptist and non-denominational Christian churches that hold to historic Christian teaching. Churches that have left or been removed from the Baptist General Convention of Texas over doctrinal standards are not included. Service times change, so please confirm with each church before visiting.</p>
+  <div class="filters" role="group" aria-label="Filter churches">
+    <button class="chip" type="button" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" type="button" data-f="Baptist" aria-pressed="false">Baptist</button>
+    <button class="chip" type="button" data-f="Non-denominational" aria-pressed="false">Non-denominational</button>
+    <button class="chip" type="button" data-f="lang" aria-pressed="false">Other languages / multicultural</button>
+    <input class="search" id="church-q" type="search" placeholder="Search by name or town" aria-label="Search churches">
+  </div>
+  <p class="note" id="church-count"></p>
+  <div class="cards" id="church-list"></div>
+</section>
+
+<section id="contact" aria-labelledby="h-contact">
+  <div class="sec-head">
+    <h2 id="h-contact">Contact CGE <span class="zh">联系我们</span></h2>
+    <p>International Student &amp; Scholar Services (ISSS) handles J-1 scholars and their J-2 family members.</p>
+  </div>
+  <div class="contact">
+    <div><b>Email</b><span>ISSS_Support@baylor.edu</span></div>
+    <div><b>Phone</b><span>(254) 710-1461</span></div>
+    <div><b>Office</b><span>Sid Richardson Bldg., 1st Floor East Wing, 1410 S. 3rd St., Waco, TX 76798</span></div>
+    <div><b>HR questions</b><span>askHR@baylor.edu · (254) 710-2000</span></div>
+  </div>
+</section>
+
+</div></main>
+
+<footer><div class="wrap">
+  <span>Draft resource guide prepared for the Baylor Center for Global Engagement. Information gathered November 2026 from baylor.edu sites and the organizations linked above.</span>
+  <span>Emergency: call 911. Baylor Police non-emergency: (254) 710-2222.</span>
+</div></footer>
+
+<script>
+(function(){
+const CAMPUS=[
+ {g:"Visas & legal status (J-2 family members)",items:[
+  ["J-2 Dependents","Who qualifies (spouse and children under 21), required funding per dependent, and how to add family to the DS-2019.","https://globalengagement.web.baylor.edu/international-student-and-scholar-services/international-scholars/j-2-dependents","CGE"],
+  ["Work permit for J-2 spouses (Form I-765)","J-2 dependents may work after USCIS approves an EAD card. Talk to ISSS before filing.","https://www.uscis.gov/i-765","USCIS"],
+  ["Maintaining J-1 status","Rules the scholar must follow, which also keep J-2 family members in status.","https://globalengagement.web.baylor.edu/international-student-and-scholar-services/international-scholars/maintaining-j-1-status","CGE"],
+  ["Travel procedures","Documents to carry when the family leaves and re-enters the U.S.","https://globalengagement.web.baylor.edu/international-student-and-scholar-services/international-scholars/travel-procedures","CGE"],
+  ["International Scholars overview","Health-insurance requirements for scholars and dependents, and the host department's role.","https://globalengagement.web.baylor.edu/international-student-and-scholar-services/international-scholars","CGE"]
+ ]},
+ {g:"Family benefits",items:[
+  ["Tuition remission for spouses & children","After one year of full-time service, spouses and children can take Baylor courses with tuition remission.","https://hr.web.baylor.edu/learn-grow/educational-assistance/tuition-remission","Baylor HR"],
+  ["Employee Assistance Program","Free counseling sessions, 24/7 phone counselors, legal, financial and parenting support for household members.","https://hr.web.baylor.edu/benefits-advantages/employee-family-resources/employee-assistance-program","Baylor HR"],
+  ["Care.com Premium membership","Find child care, babysitters, senior care and pet care at no cost to the employee.","https://hr.web.baylor.edu/sites/g/files/ecbvkj1046/files/2023-08/FAQ_Care-Membership_0.pdf","Baylor HR"],
+  ["Expectant & new parents","Paid parental leave, the Baby Bear program and adoption assistance.","https://hr.web.baylor.edu/benefits-advantages/employee-caregiver-family-resources/expectant-new-parents","Baylor HR"],
+  ["Family Benefits at Baylor (summary)","One-page overview of every family perk listed below and more.","https://hr.web.baylor.edu/news/story/2024/family-benefits-baylor","Baylor HR"]
+ ]},
+ {g:"Spouse careers",items:[
+  ["Spousal Employment Assistance","A Talent Advisor helps spouses of new full-time faculty with résumés, interviews and local job leads. Your manager makes the referral to HR.","https://hr.web.baylor.edu/spousal-employment-assistance","Baylor HR"],
+  ["Baylor staff job openings","Current staff positions across the university.","https://ejof.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/requisitions?sortBy=POSTING_DATES_DESC","Baylor HR"],
+  ["Baylor faculty job openings","Current faculty positions on Interfolio.","https://apply.interfolio.com/55109/positions","Baylor HR"]
+ ]},
+ {g:"Recreation, dining & campus life",items:[
+  ["Student Life Center access","Fitness center, climbing wall, pool and courts are open to faculty and their families.","https://campusrec.web.baylor.edu/member-services/access","Campus Rec"],
+  ["Campus dining","Discounted meals for spouses and children; kids 5 and under eat free in residential dining halls.","https://hr.web.baylor.edu/benefits-advantages/baylor-advantages/campus-dining-offerings","Baylor HR"],
+  ["Athletic tickets","Free or discounted tickets for faculty, spouse and dependent children.","https://hr.web.baylor.edu/benefits-advantages/baylor-advantages/athletic-tickets","Baylor HR"],
+  ["Mayborn Museum","Baylor's natural science and history museum, with hands-on rooms for children.","https://www.baylor.edu/mayborn/","Baylor"]
+ ]},
+ {g:"Friendship, English & faith",items:[
+  ["Global Friendship Program","Pairs international newcomers with local families to share American traditions.","https://globalengagement.web.baylor.edu/international-student-and-scholar-services/programs-and-activities/global-friendship-program","CGE"],
+  ["CGE events calendar","Upcoming international events, trips and workshops.","https://globalengagement.web.baylor.edu/events?date=upcoming&category=391","CGE"],
+  ["English for Academic Purposes","Graduate School course (fee) that visiting scholars may join when space allows. Ask ISSS about family members.","https://globalengagement.web.baylor.edu/international-student-and-scholar-services/international-scholars","CGE"],
+  ["Baylor Spiritual Life","Chapel, campus ministries and help connecting with a local church.","https://spirituallife.web.baylor.edu/campus-ministries-church-connections/local-churches","Spiritual Life"]
+ ]}
+];
+const COMMUNITY=[
+ {g:"Schools & child care",items:[
+  ["Waco ISD","Public schools for most addresses in the city of Waco. Enrollment information and school finder.","https://www.wacoisd.org/","Waco ISD"],
+  ["Midway ISD","Public schools for Woodway, Hewitt and west Waco.","https://www.midwayisd.org/","Midway ISD"],
+  ["Waco-McLennan County Library","Free library cards, children's story times, ESL books and computer access.","https://www.wacolibrary.org/","City of Waco"]
+ ]},
+ {g:"Government services",items:[
+  ["Social Security number","Apply for a card once eligible (for example, a J-2 spouse with an approved EAD).","https://www.ssa.gov/number-card","SSA"],
+  ["Texas driver license","Requirements and appointments for new Texas residents, including non-citizens.","https://www.dps.texas.gov/section/driver-license","Texas DPS"],
+  ["Texas 2-1-1","Free, confidential help finding food, housing, utility and health services. Dial 2-1-1.","https://www.211texas.org/","State of Texas"]
+ ]},
+ {g:"Health care",items:[
+  ["Family Health Center","Community clinics across Waco for primary care, pediatrics and dental care.","https://www.fhcwaco.org/","FHC"],
+  ["Baylor Scott & White – Hillcrest","Hospital with a 24-hour emergency department in Waco.","https://www.bswhealth.com/","BSW Health"]
+ ]},
+ {g:"Getting around & settling in",items:[
+  ["Waco Transit","City bus routes and schedules.","https://www.wacotransit.org/","City of Waco"],
+  ["Visit Waco","Parks, museums and family weekend ideas.","https://wacoheartoftexas.com/","Waco CVB"],
+  ["Cameron Park Zoo","Family-friendly zoo near downtown.","https://cameronparkzoo.com/","City of Waco"],
+  ["Waco Mammoth National Monument","Fossil site run by the National Park Service; good for children.","https://www.nps.gov/waco/","NPS"]
+ ]},
+ {g:"English classes",items:[
+  ["Neighbors International","English classes and cultural help for foreign-born Waco residents, run by Columbus Avenue Baptist Church.","https://cabcwaco.org/","Columbus Ave. Baptist"],
+  ["McLennan Community College","Adult education and ESL programs.","https://www.mclennan.edu/","MCC"]
+ ]}
+];
+// From Baylor Spiritual Life's local church list (Baptist + non-denominational).
+const CHURCHES=[
+ ["Acts Church","Baptist","https://www.actswaco.com/","Waco",""],
+ ["Calvary Baptist Church","Baptist","http://cbcwaco.net/","Waco","18th & Bosque"],
+ ["Carver Park Baptist Church","Baptist","https://www.carverparkwaco.org/","Waco",""],
+ ["Chalk Bluff Baptist Church","Baptist","https://chalkbluffchurch.org/about/","Waco",""],
+ ["Columbus Avenue Baptist Church","Baptist","https://cabcwaco.org/","Waco","Multicultural; runs Neighbors International English classes","Multicultural"],
+ ["DaySpring Baptist Church","Baptist","https://www.ourdayspring.org/","Waco",""],
+ ["Faith Temple Baptist Church","Baptist","https://www.facebook.com/FTBCLorena/","Lorena","Independent Baptist"],
+ ["First Baptist Church Hewitt","Baptist","https://firsthewitt.org/","Hewitt",""],
+ ["First Baptist Waco","Baptist","https://www.fbcwaco.org/","Waco","Hosts a Spanish-language congregation and the La Puerta Waco ministry","Español"],
+ ["First Woodway Baptist Church","Baptist","https://www.firstwoodway.org/","Woodway",""],
+ ["Grace Church","Baptist","https://gracewaco.com/","Waco",""],
+ ["Grace Church Hewitt","Baptist","https://www.gracehewitt.com/","Hewitt",""],
+ ["Greater Bosqueville Baptist Church","Baptist","https://www.facebook.com/share/17R5xrhy6X/","Bosqueville",""],
+ ["Greater New Light Baptist Church","Baptist","https://www.facebook.com/GNLWACOTX/","Waco",""],
+ ["Harris Creek Baptist Church","Baptist","https://www.harriscreek.org/","McGregor area",""],
+ ["Highland Baptist Church","Baptist","https://www.hbcwaco.org/","Waco",""],
+ ["Hiz Houze","Baptist","http://hizhouze.com/","Waco","Contemporary hip-hop worship"],
+ ["Hope Church Robinson","Baptist","https://www.hoperobinson.com/","Robinson","Newer church plant"],
+ ["Korean Church of Waco","Baptist","http://www.wacokbc.org/","Waco","Korean and English services","한국어 Korean"],
+ ["Lakeview Baptist Church","Baptist","https://lbcwaco.org/","Lacy Lakeview",""],
+ ["Landmark Baptist Church","Baptist","https://www.facebook.com/lmbc.waco.1","Speegleville","Independent Baptist"],
+ ["Park Lake Drive Baptist Church","Baptist","https://www.park-lake.org/","Waco","Multi-generational, multi-ethnic","Multicultural"],
+ ["Parkview Baptist Church","Baptist","https://pbcwaco.org/","Waco",""],
+ ["Primera Iglesia Bautista Waco","Baptist","https://www.primerawaco.org/","Waco","Historic Hispanic Texas Baptist church; Spanish and English","Español"],
+ ["Seventh & James Baptist Church","Baptist","https://seventhandjames.org/","Waco","Across from campus"],
+ ["Timber Crest Baptist Church","Baptist","https://www.timbercrestbc.org/","Waco","About 10 minutes from Baylor"],
+ ["Viento Fuerte Church","Baptist","https://vientofuertechurch.org/","Waco","Serves the Hispanic community","Español"],
+ ["Wellspring Church","Baptist","https://www.ws.church/","Waco",""],
+ ["Antioch Community Church","Non-denominational","https://antiochwaco.com/","Waco",""],
+ ["Church of the Open Door","Non-denominational","https://www.opendoorwaco.org/","Waco",""],
+ ["Church on the Rock Waco","Non-denominational","https://cotrwaco.org/","Waco",""],
+ ["Church Under the Bridge","Non-denominational","https://churchunderthebridge.org/","Waco","Meets under I-35 at S. 4th St."],
+ ["Family of Faith Worship Center","Non-denominational","https://www.facebook.com/fofwcwaco/","Waco","Bilingual services","Bilingual"],
+ ["Fellowship Bible Church","Non-denominational","https://fellowshipwaco.org/","Waco",""],
+ ["Glory Bell Church","Non-denominational","https://www.glorybell.com/","Waco",""],
+ ["Journey Christian Community","Non-denominational","https://www.journeycs.org/","Waco",""],
+ ["Mercy Culture Waco","Non-denominational","https://mercyculturewaco.com/","Waco",""],
+ ["Moldbreakers Fellowship","Non-denominational","https://mbf254.com/","Waco",""],
+ ["Mosaic Waco","Non-denominational","https://mosaicwaco.org/","Waco","Multicultural","Multicultural"],
+ ["Promise Co Church","Non-denominational","https://www.promiseco.church/","Waco",""],
+ ["Renew Church","Non-denominational","https://renewchurchwaco.org/","Waco",""],
+ ["River City","Non-denominational","https://www.myrivercity.church/","Waco","Over 100 years in Waco"],
+ ["Zeo Church","Non-denominational","https://www.zeochurch.us/","Waco",""]
+];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl=u=>/^https?:\/\//i.test(u||"")?u:"";
+
+function renderGroups(el,groups){
+  el.innerHTML=groups.map(g=>`<div class="group"><h3>${esc(g.g)}</h3><div class="cards">${g.items.map(([t,d,u,s])=>
+    `<div class="card"><a class="t" href="${esc(u)}" target="_blank" rel="noopener">${esc(t)} ↗</a><p>${esc(d)}</p><span class="src">${esc(s)}</span></div>`).join("")}</div></div>`).join("");
+  el.style.display="grid";el.style.gap="28px";
+}
+renderGroups($("#campus-groups"),CAMPUS);
+renderGroups($("#community-groups"),COMMUNITY);
+
+// Churches
+let cf="all";
+function renderChurches(){
+  const q=$("#church-q").value.trim().toLowerCase();
+  const list=CHURCHES.filter(([n,d,u,town,note,lang])=>{
+    if(cf==="lang"&&!lang)return false;
+    if(cf!=="all"&&cf!=="lang"&&d!==cf)return false;
+    return !q||(n+" "+town+" "+note).toLowerCase().includes(q);
+  });
+  $("#church-count").textContent=`Showing ${list.length} of ${CHURCHES.length} churches`;
+  $("#church-list").innerHTML=list.map(([n,d,u,town,note,lang])=>
+    `<div class="card church"><a class="t" href="${esc(u)}" target="_blank" rel="noopener">${esc(n)} ↗</a>
+     <div class="meta"><span class="pill">${esc(d)}</span><span class="pill">${esc(town)}</span>${lang?`<span class="pill lang">${esc(lang)}</span>`:""}</div>
+     ${note?`<p>${esc(note)}</p>`:""}</div>`).join("")||`<p class="note">No churches match that search.</p>`;
+}
+document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{
+  cf=b.dataset.f;document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));renderChurches();
+}));
+$("#church-q").addEventListener("input",renderChurches);
+renderChurches();
+
+// Updates board: talks to the backend API (/api); falls back to data/announcements.json when no backend is running.
+const API="api";
+let posts=[],canPost=false,token="",es=null;
+try{token=sessionStorage.getItem("cge-staff-token")||"";}catch(e){}
+const today=new Date().toISOString().slice(0,10);
+function fmt(d){const x=new Date(d+"T12:00:00");if(isNaN(x))return{m:"",d:esc(d)};return{m:x.toLocaleString("en-US",{month:"short"}),d:x.getDate()+"<small>"+x.getFullYear()+"</small>"};}
+function renderPosts(){
+  const showPast=$("#show-past").checked;
+  const list=posts.slice().sort((a,b)=>String(a.date).localeCompare(String(b.date))).filter(p=>showPast||String(p.date)>=today);
+  $("#posts").innerHTML=list.length?list.map(p=>{const f=fmt(p.date);const link=safeUrl(p.link);
+    return `<li class="post${String(p.date)<today?" past":""}"><time datetime="${esc(p.date)}">${f.m} ${f.d}</time>
+    <div class="body"><span class="tag ${esc(p.category)}">${esc(p.category||"Notice")}</span><strong>${esc(p.title)}</strong>
+    ${p.body?`<p>${esc(p.body)}</p>`:""}${link?`<p><a href="${esc(link)}" target="_blank" rel="noopener">Details ↗</a></p>`:""}</div>
+    ${canPost&&p.id?`<button class="del" type="button" data-id="${esc(p.id)}">Remove</button>`:""}</li>`;}).join("")
+    :`<li class="empty">No upcoming updates right now. Check back soon${canPost?", or post the first one below":""}.</li>`;
+}
+function setLive(on,text){$("#live").classList.toggle("on",on);$("#live-text").textContent=text;}
+const auth=()=>({"Authorization":"Bearer "+token});
+
+async function loadStatic(){
+  try{const r=await fetch("data/announcements.json",{cache:"no-store"});posts=await r.json();setLive(false,"Updated from site data");}
+  catch(e){posts=[];setLive(false,"Updates unavailable");}
+  $("#repo-note").hidden=false;$("#staff-btn").hidden=true;renderPosts();
+}
+function subscribe(){
+  if(!window.EventSource)return;
+  es=new EventSource(API+"/announcements/stream");
+  es.onmessage=ev=>{try{posts=JSON.parse(ev.data);setLive(true,"Live · updates appear automatically");renderPosts();}catch(e){}};
+  es.onerror=()=>setLive(false,"Reconnecting…");
+}
+async function checkStaff(){
+  if(!token){canPost=false;}
+  else{try{const r=await fetch(API+"/session",{headers:auth()});canPost=r.ok;}catch(e){canPost=false;}
+    if(!canPost){token="";try{sessionStorage.removeItem("cge-staff-token");}catch(e){}}}
+  $("#composer").hidden=!canPost;$("#staff-btn").textContent=canPost?"Sign out":"Staff sign in";renderPosts();
+  return canPost;
+}
+async function boot(){
+  try{const r=await fetch(API+"/announcements",{cache:"no-store"});if(!r.ok)throw 0;posts=await r.json();}
+  catch(e){return loadStatic();}
+  setLive(true,"Live · updates appear automatically");renderPosts();subscribe();checkStaff();
+}
+$("#show-past").addEventListener("change",renderPosts);
+$("#staff-btn").addEventListener("click",()=>{
+  if(canPost){token="";try{sessionStorage.removeItem("cge-staff-token");}catch(e){}checkStaff();return;}
+  const f=$("#login");f.hidden=!f.hidden;if(!f.hidden)$("#f-token").focus();
+});
+$("#login").addEventListener("submit",async e=>{
+  e.preventDefault();token=$("#f-token").value.trim();
+  const ok=await checkStaff();
+  $("#login-msg").textContent=ok?"":"That staff code didn't work. Check it with the site administrator.";
+  if(ok){try{sessionStorage.setItem("cge-staff-token",token);}catch(e){}e.target.reset();e.target.hidden=true;}
+});
+$("#posts").addEventListener("click",async e=>{
+  const b=e.target.closest(".del");if(!b||!canPost)return;
+  if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="Confirm remove";return;}
+  b.disabled=true;
+  try{const r=await fetch(API+"/announcements/"+encodeURIComponent(b.dataset.id),{method:"DELETE",headers:auth()});if(!r.ok)throw 0;}
+  catch(err){b.disabled=false;b.textContent="Couldn't remove";}
+});
+$("#f-date").value=today;
+$("#composer").addEventListener("submit",async e=>{
+  e.preventDefault();if(!canPost)return;
+  const msg=$("#f-msg");const link=$("#f-link").value.trim();
+  if(link&&!safeUrl(link)){msg.textContent="Links must start with https://";return;}
+  const data={title:$("#f-title").value.trim(),date:$("#f-date").value,category:$("#f-cat").value,body:$("#f-body").value.trim(),link};
+  if(!data.title||!data.date){msg.textContent="Add a title and a date.";return;}
+  msg.textContent="Publishing…";
+  try{const r=await fetch(API+"/announcements",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},auth()),body:JSON.stringify(data)});
+    const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Request failed");
+    msg.textContent="Published. Everyone viewing the guide now sees it.";e.target.reset();$("#f-date").value=today;}
+  catch(err){msg.textContent="Couldn't publish: "+err.message;}
+});
+boot();
+})();
+</script>
+<!-- ARTIFACT-END -->
+</html>
