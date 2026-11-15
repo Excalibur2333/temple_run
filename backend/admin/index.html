@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Events Admin · Waco Family Guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="admin.css">
+<style>html,body{margin:0}</style>
+
+<!-- ADMIN-MARKUP-START -->
+<div class="adm" id="admin-root">
+  <div class="a-top"><div class="a-in">
+    <h1>Waco Family Guide <small>Events admin</small></h1>
+    <a href="/" id="view-site-link" target="_blank" rel="noopener">View public site ↗</a>
+    <button type="button" id="logout" hidden>Sign out</button>
+  </div></div>
+
+  <div class="a-page">
+    <p class="a-banner" id="preview-note" hidden></p>
+
+    <form class="a-panel a-login" id="login">
+      <h2>Staff sign in</h2>
+      <p>Enter the staff code from your site administrator to add, edit or remove events.</p>
+      <label for="code">Staff code<input id="code" type="password" autocomplete="current-password" required></label>
+      <button class="a-btn" type="submit">Sign in</button>
+      <p class="a-msg err" id="login-msg" role="status"></p>
+    </form>
+
+    <div class="a-work" id="work" hidden>
+      <form class="a-panel" id="form">
+        <h2 id="form-title">Add an event</h2>
+        <label for="f-title">Title<input id="f-title" required maxlength="140" placeholder="International Thanksgiving Dinner"></label>
+        <div class="a-row">
+          <label for="f-date">Date<input id="f-date" type="date" required></label>
+          <label for="f-cat">Type<select id="f-cat"><option>Event</option><option>Trip</option><option>Workshop</option><option>Deadline</option><option>Notice</option></select></label>
+        </div>
+        <div class="a-row">
+          <label for="f-start">Start time <span class="a-hint">optional</span><input id="f-start" type="time"></label>
+          <label for="f-end">End time <span class="a-hint">optional</span><input id="f-end" type="time"></label>
+        </div>
+        <label for="f-loc">Location <span class="a-hint">optional</span><input id="f-loc" maxlength="160" placeholder="Bill Daniel Student Center"></label>
+        <label for="f-desc">Description<textarea id="f-desc" maxlength="800" placeholder="Who it's for, what to bring, how to sign up."></textarea></label>
+        <label for="f-link">Link <span class="a-hint">optional, starts with https://</span><input id="f-link" type="url" placeholder="https://"></label>
+        <label class="a-check" for="f-feat"><input id="f-feat" type="checkbox"> Feature this event at the top of the site</label>
+        <div class="a-btns">
+          <button class="a-btn" type="submit" id="save">Add event</button>
+          <button class="a-btn secondary" type="button" id="cancel" hidden>Cancel editing</button>
+        </div>
+        <p class="a-msg" id="form-msg" role="status"></p>
+      </form>
+
+      <div class="a-panel">
+        <div class="a-list-head">
+          <h2>Events <span class="a-count" id="count"></span></h2>
+          <div class="a-seg" role="group" aria-label="Which events">
+            <button type="button" data-v="upcoming" aria-pressed="true">Upcoming</button>
+            <button type="button" data-v="past" aria-pressed="false">Past</button>
+            <button type="button" data-v="all" aria-pressed="false">All</button>
+          </div>
+        </div>
+        <div class="a-items" id="items"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ADMIN-MARKUP-END -->
+
+<script src="admin.js"></script>
+</html>

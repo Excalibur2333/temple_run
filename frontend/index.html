@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Waco Family Guide</title>
+<meta name="description" content="Resources, events and local churches for spouses and dependents of Baylor University faculty, from the Center for Global Engagement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Baylor University · Center for Global Engagement</div>
+      <h1>Your family's guide to <em>life in Waco</em></h1>
+      <p class="lede">For spouses and dependents of Baylor faculty: campus benefits, visa help, schools, health care, everyday services, local churches and upcoming events.</p>
+      <div class="cta">
+        <a class="btn btn-gold" href="#events">See upcoming events</a>
+        <a class="btn btn-ghost" href="#contact">Contact ISSS</a>
+      </div>
+      <div class="facts">
+        <div><b id="fact-events">–</b><span>upcoming events</span></div>
+        <div><b id="fact-res">–</b><span>campus &amp; city resources</span></div>
+        <div><b id="fact-ch">–</b><span>local churches</span></div>
+      </div>
+    </div>
+    <aside class="spot" id="spot" aria-label="Next event" hidden></aside>
+  </div>
+</header>
+
+<nav class="bar" aria-label="Sections">
+  <div class="wrap">
+    <span class="brand">Waco Family Guide</span>
+    <a class="nav" href="#events">Events</a>
+    <a class="nav" href="#resources">Resources</a>
+    <a class="nav" href="#churches">Churches</a>
+    <a class="nav" href="#contact">Contact</a>
+  </div>
+</nav>
+
+<main><div class="wrap">
+
+<section id="events" aria-labelledby="h-events">
+  <div class="head">
+    <div>
+      <div class="eyebrow">What's happening</div>
+      <h2 id="h-events">Upcoming events</h2>
+      <p>Trips, gatherings, workshops and deadlines posted by CGE staff.</p>
+    </div>
+    <span class="live" id="live"><i></i><span id="live-text">Loading events…</span></span>
+  </div>
+  <div class="chips" role="group" aria-label="Filter events">
+    <button class="chip" type="button" data-cat="all" aria-pressed="true">All</button>
+    <button class="chip" type="button" data-cat="Event" aria-pressed="false">Events</button>
+    <button class="chip" type="button" data-cat="Trip" aria-pressed="false">Trips</button>
+    <button class="chip" type="button" data-cat="Workshop" aria-pressed="false">Workshops</button>
+    <button class="chip" type="button" data-cat="Deadline" aria-pressed="false">Deadlines</button>
+    <button class="chip" type="button" data-cat="Notice" aria-pressed="false">Notices</button>
+    <label class="toggle"><input type="checkbox" id="show-past"> Include past</label>
+  </div>
+  <div class="events" id="event-list"><div class="empty">Loading events…</div></div>
+</section>
+
+<section id="resources" aria-labelledby="h-res">
+  <div class="head">
+    <div>
+      <div class="eyebrow">Where to get help</div>
+      <h2 id="h-res">Resources</h2>
+      <p>Gathered from Baylor's official websites and local public services. Rules change, so follow each link for the current policy.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Resource type">
+      <button class="tab" role="tab" id="tab-campus" aria-selected="true" aria-controls="res-panel">On campus</button>
+      <button class="tab" role="tab" id="tab-community" aria-selected="false" aria-controls="res-panel">In Waco</button>
+    </div>
+  </div>
+  <div class="groups" id="res-panel" role="tabpanel" aria-labelledby="tab-campus"></div>
+</section>
+
+<section id="churches" aria-labelledby="h-churches">
+  <div class="head">
+    <div>
+      <div class="eyebrow">Faith &amp; community</div>
+      <h2 id="h-churches">Churches in Waco</h2>
+      <p>Baptist and non-denominational congregations from Baylor Spiritual Life's local church list.</p>
+    </div>
+  </div>
+  <p class="criteria">Selection: congregations listed by Baylor Spiritual Life for the Waco area, limited to Baptist and non-denominational Christian churches that hold to historic Christian teaching. Please confirm service times with each church before visiting.</p>
+  <div class="chips" role="group" aria-label="Filter churches">
+    <button class="chip" type="button" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" type="button" data-f="Baptist" aria-pressed="false">Baptist</button>
+    <button class="chip" type="button" data-f="Non-denominational" aria-pressed="false">Non-denominational</button>
+    <button class="chip" type="button" data-f="lang" aria-pressed="false">Other languages &amp; multicultural</button>
+    <input class="search" id="church-q" type="search" placeholder="Search by name or town" aria-label="Search churches">
+  </div>
+  <p class="note" id="church-count"></p>
+  <div class="churches" id="church-list"></div>
+</section>
+
+<section id="contact" aria-labelledby="h-contact">
+  <div class="contact">
+    <div>
+      <div class="eyebrow" style="color:var(--gold)">We're here to help</div>
+      <h2 id="h-contact">Contact CGE</h2>
+      <p>International Student &amp; Scholar Services (ISSS) supports J-1 scholars and their J-2 family members.</p>
+    </div>
+    <dl>
+      <div><dt>Email</dt><dd>ISSS_Support@baylor.edu</dd></div>
+      <div><dt>Phone</dt><dd>(254) 710-1461</dd></div>
+      <div><dt>Office</dt><dd>Sid Richardson Bldg., 1st Floor East Wing, 1410 S. 3rd St., Waco, TX 76798</dd></div>
+      <div><dt>HR questions</dt><dd>askHR@baylor.edu · (254) 710-2000</dd></div>
+    </dl>
+  </div>
+</section>
+
+</div></main>
+
+<footer><div class="wrap">
+  <span>Center for Global Engagement, Baylor University. Information gathered November 2026 from baylor.edu and the organizations linked above.</span>
+  <span>Emergency: 911 · Baylor Police: (254) 710-2222</span>
+</div></footer>
+
+<script src="js/resources.js"></script>
+<script src="js/app.js"></script>
+</html>
