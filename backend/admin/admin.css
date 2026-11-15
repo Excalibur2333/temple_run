@@ -1,0 +1,67 @@
+/* Admin console. Every rule is scoped to .adm so it can also be embedded in the preview build. */
+/* Layout: slim green top bar, then a two-column workspace: event form (left) and event list (right). */
+.adm{
+  --a-bg:#f3f5f3; --a-surface:#fff; --a-ink:#17231c; --a-muted:#5a685f; --a-line:#d8e0da; --a-green:#154734; --a-on-green:#fff;
+  --a-gold:#e3a20f; --a-gold-soft:#fcf1d2; --a-danger:#b3261e; --a-ok:#1f7a45;
+  --a-display:"Fraunces",Georgia,serif; --a-body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:var(--a-bg);color:var(--a-ink);font:15.5px/1.5 var(--a-body);min-height:100vh}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .adm{
+  --a-bg:#0e1511; --a-surface:#151f19; --a-ink:#e7eee9; --a-muted:#9fb1a5; --a-line:#2a3b30; --a-green:#123d2c; --a-on-green:#f2f7f3;
+  --a-gold:#f2bd3d; --a-gold-soft:#33290f; --a-danger:#f08a82; --a-ok:#7fcf9f}}
+:root[data-theme="dark"] .adm{
+  --a-bg:#0e1511; --a-surface:#151f19; --a-ink:#e7eee9; --a-muted:#9fb1a5; --a-line:#2a3b30; --a-green:#123d2c; --a-on-green:#f2f7f3;
+  --a-gold:#f2bd3d; --a-gold-soft:#33290f; --a-danger:#f08a82; --a-ok:#7fcf9f}
+.adm *{box-sizing:border-box}
+.adm [hidden]{display:none!important}
+.adm :focus-visible{outline:3px solid var(--a-gold);outline-offset:2px}
+.adm h1,.adm h2{font-family:var(--a-display);margin:0}
+.adm .a-top{background:var(--a-green);color:var(--a-on-green)}
+.adm .a-top .a-in{max-width:1200px;margin:0 auto;padding-block:14px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.adm .a-top h1{font-size:1.2rem;margin-right:auto}
+.adm .a-top h1 small{font-family:var(--a-body);font-weight:600;font-size:.8rem;opacity:.75;margin-left:8px;letter-spacing:.06em;text-transform:uppercase}
+.adm .a-top a,.adm .a-top button{color:var(--a-on-green);font:inherit;font-weight:600;background:none;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 14px;text-decoration:none;cursor:pointer}
+.adm .a-page{max-width:1200px;margin:0 auto;padding-block:28px 60px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.adm .a-panel{background:var(--a-surface);border:1px solid var(--a-line);border-radius:14px;padding:22px}
+.adm .a-login{max-width:420px;margin:48px auto;display:grid;gap:14px}
+.adm .a-login p{margin:0;color:var(--a-muted)}
+.adm .a-banner{background:var(--a-gold-soft);border:1px solid var(--a-gold);border-radius:12px;padding:10px 14px;margin-bottom:18px;font-size:.92rem}
+.adm .a-work{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:24px;align-items:start}
+.adm form{display:grid;gap:12px;margin:0}
+.adm label{display:grid;gap:4px;font-weight:600;font-size:.9rem;min-width:0}
+.adm .a-hint{font-weight:400;color:var(--a-muted);font-size:.82rem}
+.adm input,.adm select,.adm textarea{font:inherit;padding:9px 11px;border:1px solid var(--a-line);border-radius:8px;background:var(--a-surface);color:var(--a-ink);width:100%}
+.adm textarea{resize:vertical;min-height:84px}
+.adm .a-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.adm .a-check{display:flex;align-items:center;gap:8px;font-weight:600}
+.adm .a-check input{width:auto}
+.adm .a-btns{display:flex;gap:8px;flex-wrap:wrap}
+.adm .a-btn{font:inherit;font-weight:700;border:0;border-radius:8px;padding:10px 18px;cursor:pointer;background:var(--a-green);color:var(--a-on-green)}
+.adm .a-btn:disabled{opacity:.5;cursor:not-allowed}
+.adm .a-btn.secondary{background:transparent;color:var(--a-ink);border:1px solid var(--a-line)}
+.adm .a-msg{margin:0;font-size:.9rem;min-height:1.4em}
+.adm .a-msg.ok{color:var(--a-ok)}.adm .a-msg.err{color:var(--a-danger)}
+.adm .a-list-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.adm .a-list-head h2{font-size:1.3rem}
+.adm .a-count{font-family:var(--a-body);font-size:.9rem;color:var(--a-muted)}
+.adm .a-seg{display:inline-flex;gap:4px;background:var(--a-bg);border-radius:999px;padding:3px}
+.adm .a-seg button{font:inherit;font-weight:600;border:0;background:none;color:var(--a-muted);padding:5px 12px;border-radius:999px;cursor:pointer}
+.adm .a-seg button[aria-pressed="true"]{background:var(--a-surface);color:var(--a-ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.adm .a-items{display:grid;gap:10px}
+.adm .a-item{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;border:1px solid var(--a-line);border-radius:12px;padding:12px 14px;background:var(--a-surface)}
+.adm .a-item.editing{border-color:var(--a-gold);background:var(--a-gold-soft)}
+.adm .a-item.past{opacity:.6}
+.adm .a-date{text-align:center;font-variant-numeric:tabular-nums;line-height:1.1}
+.adm .a-date b{display:block;font-family:var(--a-display);font-size:1.5rem}
+.adm .a-date span{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--a-muted);font-weight:700}
+.adm .a-t{font-weight:700}
+.adm .a-s{color:var(--a-muted);font-size:.88rem;overflow-wrap:anywhere}
+.adm .a-tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:1px 7px;border-radius:999px;background:var(--a-bg);margin-right:6px;vertical-align:1px}
+.adm .a-tag.star{background:var(--a-gold-soft)}
+.adm .a-act{display:flex;gap:6px}
+.adm .a-act button{font:inherit;font-size:.86rem;font-weight:600;border:1px solid var(--a-line);background:var(--a-surface);color:var(--a-ink);border-radius:8px;padding:5px 10px;cursor:pointer}
+.adm .a-act button:disabled{opacity:.5;cursor:not-allowed}
+.adm .a-act button.del{color:var(--a-danger)}
+.adm .a-act button.del.confirm{background:var(--a-danger);color:#fff;border-color:var(--a-danger)}
+.adm .a-empty{color:var(--a-muted);text-align:center;padding:28px;border:1px dashed var(--a-line);border-radius:12px}
+@media (max-width:900px){.adm .a-work{grid-template-columns:1fr}}
+@media (max-width:520px){.adm .a-row{grid-template-columns:1fr}.adm .a-item{grid-template-columns:52px minmax(0,1fr)}.adm .a-act{grid-column:2}}

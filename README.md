@@ -1,22 +1,32 @@
 # Waco Family Guide
 
-A resource website from the Baylor Center for Global Engagement (CGE) for spouses and dependents of Baylor faculty.
+A website from the Baylor Center for Global Engagement (CGE) for spouses and dependents of Baylor faculty.
+**New here and not technical? Open `START-HERE.html` in your browser** for a guided tour with screenshots and a demo video.
 
-- **Updates board**: events, deadlines and notices posted live by CGE staff
-- **On-campus resources**: J-2 status, family benefits, spouse careers, recreation, friendship and English programs (from official baylor.edu pages)
-- **In Waco**: schools, government services, health care, transit, English classes
-- **Churches**: Baptist and non-denominational congregations from Baylor Spiritual Life's local church list, filterable by type and language
+## Parts
+
+| Part | URL when running | Who uses it |
+|---|---|---|
+| Public site (frontend) | `/` | Families: events, campus and Waco resources, church directory |
+| Events admin (backend) | `/admin/` | CGE staff: add, edit, delete and feature events (staff code required) |
+| API (backend) | `/api/...` | Used by the two pages above |
 
 ## Project layout
 
 ```
-frontend/                  the website (one HTML page, no build step)
+START-HERE.html            plain-language guide with screenshots and demo video
+frontend/                  public site, plain HTML/CSS/JS, no build step
   index.html
-  data/announcements.json  fallback updates, used when no backend is running
+  css/style.css
+  js/app.js                events, resource tabs, church filters
+  js/resources.js          resource and church lists (edit these to change links)
+  data/events.json         fallback events when no backend is running
 backend/                   Node.js server, no dependencies
-  server.js                serves frontend/ and the /api endpoints
-  data/announcements.json  live updates storage
+  server.js                serves frontend/ at /, admin/ at /admin, and the API
+  admin/                   staff events console (index.html, admin.css, admin.js)
+  data/events.json         event storage
   .env.example             settings
+docs/                      screenshots and demo video
 ```
 
 ## Run it
@@ -25,30 +35,37 @@ Requires Node.js 18 or newer.
 
 ```
 cd backend
-ADMIN_TOKEN=pick-a-long-secret-code npm start
+ADMIN_TOKEN=pick-a-long-staff-code npm start
 ```
 
-Open http://localhost:3000. Staff click **Staff sign in** on the updates board, enter the `ADMIN_TOKEN` code, and can then post or remove updates. Everyone with the page open sees changes immediately.
+- Public site: http://localhost:3000/
+- Staff admin: http://localhost:3000/admin/ (sign in with the `ADMIN_TOKEN` value, at least 12 characters)
 
-On Windows PowerShell: `$env:ADMIN_TOKEN="pick-a-long-secret-code"; npm start`
+Windows PowerShell: `$env:ADMIN_TOKEN="pick-a-long-staff-code"; npm start`
 
 ## API
 
 | Method | Path | Who | Purpose |
 |---|---|---|---|
-| GET | `/api/announcements` | anyone | list updates |
-| GET | `/api/announcements/stream` | anyone | live feed (Server-Sent Events) |
+| GET | `/api/events` | anyone | list events |
+| GET | `/api/events/stream` | anyone | live feed (Server-Sent Events), sends the full list on every change |
 | GET | `/api/session` | staff | check the staff code |
-| POST | `/api/announcements` | staff | add an update: `{title, date: "YYYY-MM-DD", category, body, link}` |
-| DELETE | `/api/announcements/:id` | staff | remove an update |
+| POST | `/api/events` | staff | add an event |
+| PUT | `/api/events/:id` | staff | replace an event |
+| DELETE | `/api/events/:id` | staff | delete an event |
 
-Staff requests send `Authorization: Bearer <ADMIN_TOKEN>`.
+Event fields: `title`, `date` (YYYY-MM-DD), `startTime`/`endTime` (HH:MM, optional), `location`, `category` (Event, Trip, Workshop, Deadline, Notice), `description`, `link` (http/https), `featured` (only one event is featured at a time).
+
+Staff requests send `Authorization: Bearer <ADMIN_TOKEN>`. Five wrong codes from one address lock it out for five minutes.
 
 ## Hosting
 
-- **With live updates**: deploy `backend/` to any Node host (a Baylor ITS server, Render, Railway, Azure App Service). Keep `backend/data/` on persistent storage and set `ADMIN_TOKEN` as an environment variable. Serve it over HTTPS.
-- **Static only**: publish `frontend/` on any web host. The updates board then shows `frontend/data/announcements.json`, which you edit by hand.
+- Deploy `backend/` (with `frontend/` beside it) to any Node host, such as a Baylor ITS server, Azure App Service, Render or Railway.
+- Set `ADMIN_TOKEN` as a secret environment variable and keep `backend/data/` on persistent storage.
+- Serve it over HTTPS so the staff code is encrypted in transit.
+- Static-only option: publish just `frontend/`. Events then come from `frontend/data/events.json`, edited by hand, and there is no admin page.
 
 ## Editing content
 
-Resources and churches are the `CAMPUS`, `COMMUNITY` and `CHURCHES` lists near the bottom of `frontend/index.html`. Church selection: Baptist and non-denominational congregations from Baylor Spiritual Life's list; please have CGE staff review before launch.
+- Events: use the admin page.
+- Resource links and churches: edit `frontend/js/resources.js`. The church list holds Baptist and non-denominational congregations from Baylor Spiritual Life's local church list; CGE should review it before launch.

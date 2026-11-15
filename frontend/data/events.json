@@ -1,0 +1,62 @@
+[
+  {
+    "id": "fall-festival-2026",
+    "title": "International Fall Festival",
+    "date": "2026-11-13",
+    "startTime": "",
+    "endTime": "",
+    "location": "",
+    "category": "Event",
+    "description": "Part of CGE's Fall 2026 trips and events. Ask ISSS whether spouses and children may attend.",
+    "link": "https://globalengagement.web.baylor.edu/international-student-and-scholar-services/programs-and-activities/fall-2026-trips-events",
+    "featured": false
+  },
+  {
+    "id": "grad-reception-2026",
+    "title": "International Graduation Reception",
+    "date": "2026-12-17",
+    "startTime": "",
+    "endTime": "",
+    "location": "",
+    "category": "Event",
+    "description": "Sash presentation and reception for international graduates and their families.",
+    "link": "https://globalengagement.web.baylor.edu/international-student-and-scholar-services/programs-and-activities/fall-2026-trips-events",
+    "featured": true
+  },
+  {
+    "id": "bowling-2027",
+    "title": "Bowling at the SUB",
+    "date": "2027-02-01",
+    "startTime": "",
+    "endTime": "",
+    "location": "Bill Daniel Student Center",
+    "category": "Trip",
+    "description": "Exact date to be announced. February outing on CGE's spring calendar. Contact ISSS to confirm whether dependents can join.",
+    "link": "https://globalengagement.web.baylor.edu/international-student-and-scholar-services/programs-and-activities/spring-2027-trips-events",
+    "featured": false
+  },
+  {
+    "id": "zoo-2027",
+    "title": "Cameron Park Zoo Trip",
+    "date": "2027-03-01",
+    "startTime": "",
+    "endTime": "",
+    "location": "Cameron Park Zoo",
+    "category": "Trip",
+    "description": "Exact date to be announced. March trip on CGE's spring calendar. Contact ISSS to confirm whether dependents can join.",
+    "link": "https://globalengagement.web.baylor.edu/international-student-and-scholar-services/programs-and-activities/spring-2027-trips-events",
+    "featured": false
+  },
+  {
+    "id": "nasa-2027",
+    "title": "NASA Trip",
+    "date": "2027-04-01",
+    "startTime": "",
+    "endTime": "",
+    "location": "",
+    "category": "Trip",
+    "description": "Exact date to be announced. April trip on CGE's spring calendar. Contact ISSS to confirm whether dependents can join.",
+    "link": "https://globalengagement.web.baylor.edu/international-student-and-scholar-services/programs-and-activities/spring-2027-trips-events",
+    "featured": false
+  }
+]
