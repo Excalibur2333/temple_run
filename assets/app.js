@@ -547,6 +547,12 @@ function setupImport() {
     if (!url) return;
     run(async () => applyImport(await Importer.importUrl(url), { label: "Linked workbook", url, autoRefresh: $("#imp-url-auto").checked }), "the link");
   });
+  $("#imp-example").addEventListener("click", () => run(async () => {
+    const res = await fetch("examples/example_team_tracker.xlsx", { cache: "no-store" });
+    if (!res.ok) throw new Error(`examples/example_team_tracker.xlsx returned HTTP ${res.status}`);
+    const out = await Importer.importBuffers([{ name: "example_team_tracker.xlsx", buffer: await res.arrayBuffer() }]);
+    await applyImport(out, { label: "example_team_tracker.xlsx (fictional)" });
+  }, "the example workbook"));
   $("#imp-template").addEventListener("click", () => XLSX.writeFile(Importer.templateWorkbook(), "ai_vc_research_template.xlsx"));
   if (state.source.kind === "browser" && state.report) renderReport({ tables: state.tables, report: state.report }, { applied: false });
 
