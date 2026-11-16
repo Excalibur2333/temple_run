@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Venture Intelligence</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>AI Startup &amp; VC Intelligence</h1>
+      <p class="sub">Baylor AI Society × Kampus.vc · research database &amp; dashboard</p>
+    </div>
+    <div id="dataset-badge" class="badge"></div>
+  </header>
+
+  <div id="sample-banner" class="banner" hidden>
+    Showing <strong>fictional sample data</strong> because <code>data/*.csv</code> is empty.
+    Every name and number is made up. Add real rows to <code>data/</code> to replace it.
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button data-tab="overview" class="active">Overview</button>
+    <button data-tab="startups">Startups</button>
+    <button data-tab="funding">Funding</button>
+    <button data-tab="progression">Success &amp; Failure</button>
+    <button data-tab="investors">Investors</button>
+    <button data-tab="programs">Accelerators &amp; Studios</button>
+    <button data-tab="import">Import / Validate</button>
+  </nav>
+
+  <main>
+    <section id="tab-overview" class="tab active">
+      <div class="kpis" id="kpis"></div>
+      <div class="grid2">
+        <figure class="card"><figcaption>Startups by category</figcaption><div class="chart"><canvas id="c-category"></canvas></div></figure>
+        <figure class="card"><figcaption>Startups by current status</figcaption><div class="chart"><canvas id="c-status"></canvas></div></figure>
+      </div>
+      <div class="card">
+        <h3>Data coverage</h3>
+        <p class="muted">How complete the research is. Low coverage means the charts are less reliable.</p>
+        <div class="table-wrap"><table id="coverage"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-startups" class="tab">
+      <div class="filters">
+        <input id="f-search" type="search" placeholder="Search name, description, city…">
+        <select id="f-category"><option value="">All categories</option></select>
+        <select id="f-status"><option value="">All statuses</option></select>
+        <select id="f-stage"><option value="">Any highest stage</option></select>
+        <button id="f-export" class="secondary">Export CSV</button>
+      </div>
+      <p class="muted" id="startup-count"></p>
+      <div class="table-wrap"><table id="t-startups"></table></div>
+    </section>
+
+    <section id="tab-funding" class="tab">
+      <div class="grid2">
+        <figure class="card"><figcaption>Median round size by stage (USD, disclosed rounds)</figcaption><div class="chart"><canvas id="c-median-stage"></canvas></div></figure>
+        <figure class="card"><figcaption>Total capital raised by category (USD)</figcaption><div class="chart"><canvas id="c-cap-category"></canvas></div></figure>
+        <figure class="card"><figcaption>Number of rounds per year</figcaption><div class="chart"><canvas id="c-rounds-year"></canvas></div></figure>
+        <figure class="card"><figcaption>Median post-money valuation by stage (USD)</figcaption><div class="chart"><canvas id="c-val-stage"></canvas></div></figure>
+      </div>
+      <div class="card">
+        <h3>Round-size table by stage × category</h3>
+        <p class="muted">Median disclosed amount (USD) and round count.</p>
+        <div class="table-wrap"><table id="t-stage-cat"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-progression" class="tab">
+      <div class="grid2">
+        <figure class="card"><figcaption>Startups that reached each stage</figcaption><div class="chart"><canvas id="c-funnel"></canvas></div></figure>
+        <figure class="card"><figcaption>Median months between consecutive rounds</figcaption><div class="chart"><canvas id="c-gap"></canvas></div></figure>
+      </div>
+      <div class="card">
+        <h3>Stage conversion</h3>
+        <p class="muted">Of startups that raised stage X, the share that later raised the next stage. Recent rounds haven't had time to convert, so read the latest cohorts with care.</p>
+        <div class="table-wrap"><table id="t-conversion"></table></div>
+      </div>
+      <div class="card">
+        <h3>Outcome by highest stage reached</h3>
+        <div class="table-wrap"><table id="t-outcome"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-investors" class="tab">
+      <div class="filters">
+        <input id="fi-search" type="search" placeholder="Search investors…">
+        <select id="fi-type"><option value="">All types</option></select>
+        <select id="fi-stage"><option value="">Any stage</option></select>
+      </div>
+      <div class="table-wrap"><table id="t-investors"></table></div>
+    </section>
+
+    <section id="tab-programs" class="tab">
+      <div class="card">
+        <h3>Program terms compared</h3>
+        <p class="muted">Implied valuation = investment ÷ equity. Alumni outcomes only count startups in this database.</p>
+        <div class="table-wrap"><table id="t-programs"></table></div>
+      </div>
+      <div class="card">
+        <h3>Program alumni vs. everyone else</h3>
+        <div class="table-wrap"><table id="t-alumni"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-import" class="tab">
+      <div class="card">
+        <h3>Check a CSV before you submit it</h3>
+        <p class="muted">Pick the table, choose your CSV (exported from Google Sheets or Excel). It is checked against the same rules CI uses. Nothing is uploaded — it stays in your browser.</p>
+        <div class="filters">
+          <select id="imp-table"></select>
+          <input id="imp-file" type="file" accept=".csv,text/csv">
+          <button id="imp-template" class="secondary">Download blank template</button>
+        </div>
+        <div id="imp-result"></div>
+      </div>
+      <div class="card">
+        <h3>Field reference</h3>
+        <div class="table-wrap"><table id="imp-fields"></table></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="muted">Data: <code>data/*.csv</code> · Rules: <code>schema/schema.json</code> · Every row needs a public <code>source_url</code>.</footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>

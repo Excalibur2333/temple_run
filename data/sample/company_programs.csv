@@ -1,0 +1,21 @@
+company_id,program_id,batch,year,source_url,collected_by,collected_at,notes
+nimbus-dev,keystone-incubator,S19,2019,https://example.com/sample/participation/nimbus-dev-keystone-incubator,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+mosaic-health,launchpad-alpha,S21,2021,https://example.com/sample/participation/mosaic-health-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+vireo-shield,keystone-incubator,S20,2020,https://example.com/sample/participation/vireo-shield-keystone-incubator,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+sable-health,launchpad-alpha,S17,2017,https://example.com/sample/participation/sable-health-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+meridian-compute,prairie-ai-lab,W18,2018,https://example.com/sample/participation/meridian-compute-prairie-ai-lab,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+pylon-shield,launchpad-alpha,S19,2019,https://example.com/sample/participation/pylon-shield-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+talon-ledger,northbeam-accelerator,S20,2020,https://example.com/sample/participation/talon-ledger-northbeam-accelerator,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+glacier-agents,launchpad-alpha,W21,2021,https://example.com/sample/participation/glacier-agents-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+kiln-ledger,launchpad-alpha,S19,2019,https://example.com/sample/participation/kiln-ledger-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+loom-agents,launchpad-alpha,W22,2022,https://example.com/sample/participation/loom-agents-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+nova-health,launchpad-alpha,W23,2023,https://example.com/sample/participation/nova-health-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+pique-shield,prairie-ai-lab,S21,2021,https://example.com/sample/participation/pique-shield-prairie-ai-lab,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+quasar-health,launchpad-alpha,W18,2018,https://example.com/sample/participation/quasar-health-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+rook-agents,launchpad-alpha,W24,2024,https://example.com/sample/participation/rook-agents-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+sorrel-labs,signal-forge-studio,W19,2019,https://example.com/sample/participation/sorrel-labs-signal-forge-studio,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+umber-works,signal-forge-studio,S23,2023,https://example.com/sample/participation/umber-works-signal-forge-studio,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+willow-health,launchpad-alpha,W21,2021,https://example.com/sample/participation/willow-health-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+xylo-works,northbeam-accelerator,S24,2024,https://example.com/sample/participation/xylo-works-northbeam-accelerator,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+zephyr-works,prairie-ai-lab,S16,2016,https://example.com/sample/participation/zephyr-works-prairie-ai-lab,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
+eddy-shield,launchpad-alpha,S19,2019,https://example.com/sample/participation/eddy-shield-launchpad-alpha,sample-bot,2026-11-01,FICTIONAL SAMPLE ROW
