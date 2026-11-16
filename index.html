@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Venture Intelligence</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>AI Startup &amp; VC Intelligence</h1>
+      <p class="sub">Baylor AI Society × Kampus.vc · research database &amp; dashboard</p>
+    </div>
+    <div id="dataset-badge" class="badge"></div>
+  </header>
+
+  <div id="sample-banner" class="banner" hidden>
+    Showing <strong>fictional sample data</strong>. Every name and number is made up.
+    <strong>Drop your Excel file on the Import tab</strong> to see your own data.
+  </div>
+  <div id="source-bar" class="source-bar"></div>
+
+  <nav class="tabs" role="tablist">
+    <button data-tab="overview" class="active">Overview</button>
+    <button data-tab="startups">Startups</button>
+    <button data-tab="funding">Funding</button>
+    <button data-tab="progression">Success &amp; Failure</button>
+    <button data-tab="investors">Investors</button>
+    <button data-tab="programs">Accelerators &amp; Studios</button>
+    <button data-tab="import">Import Excel</button>
+  </nav>
+
+  <main>
+    <section id="tab-overview" class="tab active">
+      <div class="kpis" id="kpis"></div>
+      <div class="card">
+        <h3>Key insights</h3>
+        <p class="muted">Written automatically from the current data. Check the numbers before you quote them.</p>
+        <ul class="insights" id="insights"></ul>
+      </div>
+      <div class="grid2">
+        <figure class="card"><figcaption>Startups by category</figcaption><div class="chart"><canvas id="c-category"></canvas></div></figure>
+        <figure class="card"><figcaption>Startups by current status</figcaption><div class="chart"><canvas id="c-status"></canvas></div></figure>
+        <figure class="card"><figcaption>Capital raised per year (disclosed rounds, USD)</figcaption><div class="chart"><canvas id="c-capital-year"></canvas></div></figure>
+        <div class="card">
+          <h3>Data coverage</h3>
+          <p class="muted">How complete the research is. The lower these bars, the less reliable the charts.</p>
+          <div class="table-wrap"><table id="coverage"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-startups" class="tab">
+      <div class="grid2">
+        <figure class="card"><figcaption>Business models</figcaption><div class="chart"><canvas id="c-model"></canvas></div></figure>
+        <figure class="card"><figcaption>Target customers</figcaption><div class="chart"><canvas id="c-customer"></canvas></div></figure>
+        <figure class="card"><figcaption>Top HQ cities</figcaption><div class="chart"><canvas id="c-cities"></canvas></div></figure>
+        <figure class="card"><figcaption>Startups by founding year</figcaption><div class="chart"><canvas id="c-founded"></canvas></div></figure>
+      </div>
+      <div class="card">
+        <div class="filters">
+          <input id="f-search" type="search" placeholder="Search name, description, city…">
+          <select id="f-category"><option value="">All categories</option></select>
+          <select id="f-status"><option value="">All statuses</option></select>
+          <select id="f-stage"><option value="">Any highest stage</option></select>
+          <button id="f-export" class="secondary">Export CSV</button>
+        </div>
+        <p class="muted" id="startup-count"></p>
+        <div class="table-wrap tall"><table id="t-startups"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-funding" class="tab">
+      <div class="grid2">
+        <figure class="card"><figcaption>Median round size by stage (USD)</figcaption><div class="chart"><canvas id="c-median-stage"></canvas></div></figure>
+        <figure class="card"><figcaption>Total capital raised by category (USD)</figcaption><div class="chart"><canvas id="c-cap-category"></canvas></div></figure>
+        <figure class="card"><figcaption>Rounds per year, by stage</figcaption><div class="chart"><canvas id="c-rounds-year"></canvas></div></figure>
+        <figure class="card"><figcaption>Median post-money valuation by stage (USD)</figcaption><div class="chart"><canvas id="c-val-stage"></canvas></div></figure>
+      </div>
+      <div class="card">
+        <h3>Heatmap: category × stage</h3>
+        <p class="muted">Cell = median disclosed round size, (number of rounds). Darker = more rounds.</p>
+        <div class="table-wrap"><table id="t-stage-cat" class="heatmap"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-progression" class="tab">
+      <div class="grid2">
+        <figure class="card"><figcaption>Startups that reached each stage</figcaption><div class="chart"><canvas id="c-funnel"></canvas></div></figure>
+        <figure class="card"><figcaption>Median months between consecutive rounds</figcaption><div class="chart"><canvas id="c-gap"></canvas></div></figure>
+        <figure class="card"><figcaption>% that reached Series A, by founding year</figcaption><div class="chart"><canvas id="c-cohort"></canvas></div>
+          <p class="muted small">Recent cohorts are naturally lower; they haven't had time yet.</p></figure>
+        <div class="card">
+          <h3>Stage conversion</h3>
+          <p class="muted">Of startups that reached at least stage X, the share that also reached the next stage.</p>
+          <div class="table-wrap"><table id="t-conversion"></table></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Outcome by highest stage reached</h3>
+        <div class="table-wrap"><table id="t-outcome"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-investors" class="tab">
+      <div class="grid2">
+        <figure class="card"><figcaption>Most active investors (deals in this data)</figcaption><div class="chart tall"><canvas id="c-top-investors"></canvas></div></figure>
+        <figure class="card"><figcaption>Investors by type</figcaption><div class="chart tall"><canvas id="c-investor-types"></canvas></div></figure>
+      </div>
+      <div class="card">
+        <div class="filters">
+          <input id="fi-search" type="search" placeholder="Search investors…">
+          <select id="fi-type"><option value="">All types</option></select>
+          <select id="fi-stage"><option value="">Any stage</option></select>
+        </div>
+        <div class="table-wrap tall"><table id="t-investors"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-programs" class="tab">
+      <div class="grid2">
+        <figure class="card"><figcaption>% of alumni that reached Series A</figcaption><div class="chart"><canvas id="c-program-alumni"></canvas></div></figure>
+        <figure class="card"><figcaption>Implied valuation of the standard deal (investment ÷ equity)</figcaption><div class="chart"><canvas id="c-program-valuation"></canvas></div></figure>
+      </div>
+      <div class="card">
+        <h3>Program terms compared</h3>
+        <p class="muted">Alumni outcomes only count startups in this database.</p>
+        <div class="table-wrap"><table id="t-programs"></table></div>
+      </div>
+      <div class="card">
+        <h3>Program alumni vs. everyone else</h3>
+        <div class="table-wrap"><table id="t-alumni"></table></div>
+      </div>
+    </section>
+
+    <section id="tab-import" class="tab">
+      <div class="card">
+        <h3>Import your Excel</h3>
+        <p class="muted">Drop one or more <b>.xlsx / .xls / .csv</b> files. Sheets and columns are recognised automatically
+          (e.g. “Company Name”, “Round”, “Amount ($M)”, “Lead Investor”, a Crunchbase export…), values are cleaned,
+          and the whole dashboard updates. Files never leave your browser.</p>
+        <label id="dropzone" class="dropzone">
+          <input id="imp-file" type="file" accept=".xlsx,.xls,.xlsm,.csv" multiple>
+          <span class="dz-big">Drop Excel files here</span>
+          <span class="muted">or click to choose</span>
+        </label>
+        <div class="filters url-row">
+          <input id="imp-url" type="url" placeholder="…or paste a shared link (Google Sheets, OneDrive / SharePoint, Dropbox)">
+          <label class="small"><input id="imp-url-auto" type="checkbox" checked> re-load on every visit</label>
+          <button id="imp-url-go" class="primary">Load link</button>
+        </div>
+        <p class="muted small">Links must be shared as “anyone with the link”. Some services (often SharePoint) block browser access; if so, download the file and drop it above.
+          To make the whole team see the same file automatically, commit it to <code>data/excel/</code> and list it in <code>data/sources.json</code>.</p>
+        <div class="filters">
+          <button id="imp-example" class="secondary">Try it with an example workbook</button>
+          <button id="imp-template" class="secondary">Download Excel template</button>
+        </div>
+        <div id="imp-status"></div>
+        <div id="imp-result"></div>
+      </div>
+      <div class="card">
+        <h3>Field reference</h3>
+        <div class="filters"><select id="ref-table"></select></div>
+        <div class="table-wrap"><table id="imp-fields"></table></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="muted">Rules: <code>schema/schema.json</code> · Excel header aliases: <code>schema/import_rules.json</code> · Every row needs a public <code>source_url</code>.</footer>
+  <script src="assets/excel.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

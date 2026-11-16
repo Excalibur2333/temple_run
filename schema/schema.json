@@ -1,0 +1,108 @@
+{
+  "version": "0.2.0",
+  "enums": {
+    "category": ["AI Agents", "Enterprise AI", "Healthcare AI", "Cybersecurity AI", "FinTech AI", "Developer Tools", "AI Infrastructure", "Vertical AI", "Consumer AI", "Other"],
+    "business_model": ["B2B SaaS", "Usage-based API", "Open Core", "Marketplace", "B2C Subscription", "Services", "Hardware", "Other", "Unknown"],
+    "target_customer": ["Enterprise", "SMB", "Developers", "Consumers", "Government", "Healthcare Providers", "Financial Institutions", "Other", "Unknown"],
+    "company_status": ["Active", "Acquired", "Shut Down", "Inactive", "IPO", "Unknown"],
+    "stage": ["Pre-Seed", "Seed", "Series A", "Series B", "Series C", "Series D+", "Bridge", "Grant", "Unknown"],
+    "investor_type": ["Angel", "Syndicate", "Micro-VC", "VC", "Corporate VC", "Accelerator", "Venture Studio", "Other"],
+    "program_type": ["Accelerator", "Incubator", "Venture Studio", "University Program", "Other"],
+    "support": ["Mentorship", "Demo Day", "Cloud Credits", "Office Space", "Co-founder Matching", "Shared Services", "Recruiting", "Customer Intros", "Follow-on Fund"],
+    "confidence": ["High", "Medium", "Low"]
+  },
+  "provenance": [
+    {"name": "source_url", "type": "url", "required": true, "doc": "Public page that backs the row (press release, Crunchbase/PitchBook page, company blog, SEC filing)."},
+    {"name": "collected_by", "type": "string", "required": true, "doc": "GitHub handle or initials of the student who entered the row."},
+    {"name": "collected_at", "type": "date", "required": true, "doc": "Date the row was researched, YYYY-MM-DD."},
+    {"name": "notes", "type": "string", "required": false, "doc": "Anything a reviewer should know (conflicting sources, estimates)."}
+  ],
+  "tables": {
+    "companies": {
+      "file": "companies.csv",
+      "label": "AI Startups",
+      "primary_key": "company_id",
+      "columns": [
+        {"name": "company_id", "type": "id", "required": true, "doc": "Lowercase slug, e.g. acme-ai. Never changes once created."},
+        {"name": "name", "type": "string", "required": true},
+        {"name": "website", "type": "url", "required": false},
+        {"name": "category", "type": "enum", "enum": "category", "required": true, "doc": "Primary category. Pick one."},
+        {"name": "sub_category", "type": "string", "required": false, "doc": "Free text, e.g. 'legal AI', 'code review'."},
+        {"name": "business_model", "type": "enum", "enum": "business_model", "required": true},
+        {"name": "target_customer", "type": "enum", "enum": "target_customer", "required": true},
+        {"name": "founded_year", "type": "int", "min": 1990, "max": 2030, "required": false},
+        {"name": "hq_city", "type": "string", "required": false},
+        {"name": "hq_country", "type": "string", "required": false, "doc": "ISO-3166 alpha-2, e.g. US."},
+        {"name": "status", "type": "enum", "enum": "company_status", "required": true},
+        {"name": "status_date", "type": "date", "required": false, "doc": "When status last changed (acquisition / shutdown date)."},
+        {"name": "acquirer", "type": "string", "required": false},
+        {"name": "description", "type": "string", "required": false, "doc": "One sentence: what they sell to whom."},
+        {"name": "total_funding_usd", "type": "number", "min": 0, "required": false, "doc": "Reported total raised (e.g. from a Crunchbase export). The dashboard uses the larger of this and the sum of known rounds."}
+      ]
+    },
+    "investors": {
+      "file": "investors.csv",
+      "label": "Investors",
+      "primary_key": "investor_id",
+      "columns": [
+        {"name": "investor_id", "type": "id", "required": true},
+        {"name": "name", "type": "string", "required": true},
+        {"name": "type", "type": "enum", "enum": "investor_type", "required": true},
+        {"name": "website", "type": "url", "required": false},
+        {"name": "hq_city", "type": "string", "required": false},
+        {"name": "hq_country", "type": "string", "required": false},
+        {"name": "focus_categories", "type": "enum_list", "enum": "category", "required": false, "doc": "Semicolon-separated, e.g. AI Agents;Developer Tools"},
+        {"name": "stages", "type": "enum_list", "enum": "stage", "required": false, "doc": "Stages they typically invest in."},
+        {"name": "check_size_min_usd", "type": "number", "min": 0, "required": false},
+        {"name": "check_size_max_usd", "type": "number", "min": 0, "required": false},
+        {"name": "fund_size_usd", "type": "number", "min": 0, "required": false}
+      ]
+    },
+    "funding_rounds": {
+      "file": "funding_rounds.csv",
+      "label": "Funding Rounds",
+      "primary_key": "round_id",
+      "columns": [
+        {"name": "round_id", "type": "id", "required": true, "doc": "Convention: <company_id>-<stage-slug>[-n], e.g. acme-ai-seed"},
+        {"name": "company_id", "type": "ref", "ref": "companies", "required": true},
+        {"name": "stage", "type": "enum", "enum": "stage", "required": true},
+        {"name": "announced_date", "type": "date", "required": true, "doc": "YYYY-MM-DD; use YYYY-MM-01 if only the month is known and say so in notes."},
+        {"name": "amount_usd", "type": "number", "min": 0, "required": false, "doc": "Leave blank if undisclosed. Never guess."},
+        {"name": "post_money_valuation_usd", "type": "number", "min": 0, "required": false},
+        {"name": "lead_investor_ids", "type": "ref_list", "ref": "investors", "required": false},
+        {"name": "participant_investor_ids", "type": "ref_list", "ref": "investors", "required": false},
+        {"name": "confidence", "type": "enum", "enum": "confidence", "required": true}
+      ]
+    },
+    "programs": {
+      "file": "programs.csv",
+      "label": "Accelerators & Venture Studios",
+      "primary_key": "program_id",
+      "columns": [
+        {"name": "program_id", "type": "id", "required": true},
+        {"name": "name", "type": "string", "required": true},
+        {"name": "type", "type": "enum", "enum": "program_type", "required": true},
+        {"name": "website", "type": "url", "required": false},
+        {"name": "hq_country", "type": "string", "required": false},
+        {"name": "investment_usd", "type": "number", "min": 0, "required": false, "doc": "Standard check per company."},
+        {"name": "equity_pct", "type": "number", "min": 0, "max": 100, "required": false, "doc": "Standard equity taken, 0-100."},
+        {"name": "program_length_weeks", "type": "int", "min": 0, "max": 520, "required": false},
+        {"name": "cohorts_per_year", "type": "number", "min": 0, "required": false},
+        {"name": "avg_batch_size", "type": "int", "min": 0, "required": false},
+        {"name": "support_offered", "type": "enum_list", "enum": "support", "required": false},
+        {"name": "model_summary", "type": "string", "required": false, "doc": "How they make money / how the studio model works."}
+      ]
+    },
+    "company_programs": {
+      "file": "company_programs.csv",
+      "label": "Program Participation",
+      "primary_key": ["company_id", "program_id"],
+      "columns": [
+        {"name": "company_id", "type": "ref", "ref": "companies", "required": true},
+        {"name": "program_id", "type": "ref", "ref": "programs", "required": true},
+        {"name": "batch", "type": "string", "required": false, "doc": "e.g. W24, S25, Cohort 3"},
+        {"name": "year", "type": "int", "min": 1990, "max": 2030, "required": false}
+      ]
+    }
+  }
+}

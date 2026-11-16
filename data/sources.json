@@ -1,0 +1,5 @@
+{
+  "_doc": "Excel workbooks the dashboard auto-loads from this repo (merged on top of data/*.csv). Paths are relative to the site root. excel_urls must be public direct-download links that allow browser access (e.g. Google Sheets 'Publish to web' .xlsx link).",
+  "excel_files": [],
+  "excel_urls": []
+}

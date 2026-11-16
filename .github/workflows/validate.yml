@@ -1,0 +1,23 @@
+name: Validate data
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate research data
+        run: python3 scripts/validate.py data --summary
+      - name: Validate sample data
+        run: python3 scripts/validate.py data/sample
+      - name: Data dictionary is up to date
+        run: |
+          python3 scripts/build_data_dictionary.py
+          git diff --exit-code docs/DATA_DICTIONARY.md || (echo "Run: python3 scripts/build_data_dictionary.py and commit the result" && exit 1)
