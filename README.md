@@ -45,7 +45,7 @@ python3 scripts/validate.py data/sample
 python3 scripts/build_data_dictionary.py
 ```
 
-No installs needed: Python 3.9+ standard library. The page loads Chart.js and PapaParse from cdnjs.
+No installs needed: Python 3.9+ standard library. The page loads Chart.js, PapaParse and SheetJS from cdnjs.
 
 ## Importing Excel (fastest way to see charts)
 
@@ -74,10 +74,9 @@ To make the import part of the official, reviewed dataset, click **Download clea
 
 ## Adding data
 
-1. Copy the header row of the right `data/*.csv` into a Google Sheet tab (or download a blank template from the **Import / Validate** tab).
-2. Fill rows following [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md). Add investors and companies **before** the rounds that reference them.
-3. Export CSV → check it on the **Import / Validate** tab → fix errors.
-4. Put the rows in `data/<table>.csv` on a branch and open a pull request. CI must be green and one teammate reviews it.
+1. Fill the team workbook (download the template from the **Import Excel** tab, or keep your own layout). Column meanings: [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md).
+2. Drop it on the **Import Excel** tab and fix everything under *things to fix*.
+3. Download the cleaned CSVs, put them in `data/` on a branch and open a pull request. CI must be green and one teammate reviews it.
 
 Full process: [`docs/WORKFLOW.md`](docs/WORKFLOW.md).
 
