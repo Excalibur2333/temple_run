@@ -1,0 +1,151 @@
+{
+  "_doc": "How Excel/CSV files are mapped onto schema.json. Header matching ignores case, spaces and punctuation. Add aliases here when a teammate's sheet uses a header the importer doesn't recognise. Keys starting with 'company.' or 'round.' create/enrich rows in those tables from the same sheet.",
+  "sheet_hints": {
+    "companies": ["startup", "compan", "organization", "org", "landscape", "portfolio"],
+    "funding_rounds": ["round", "funding", "deal", "financing", "raise"],
+    "investors": ["investor", "vc", "angel", "fund"],
+    "programs": ["accelerat", "program", "studio", "incubat"],
+    "company_programs": ["batch", "cohort", "participation", "alumni"]
+  },
+  "column_aliases": {
+    "companies": {
+      "company_id": ["company id", "company_id", "slug"],
+      "name": ["name", "company", "company name", "startup", "startup name", "organization", "organization name", "org name", "companies"],
+      "website": ["website", "url", "homepage", "domain", "company website", "website url", "web"],
+      "category": ["category", "industry", "industries", "sector", "vertical", "ai category", "segment", "space", "primary category"],
+      "sub_category": ["sub category", "subcategory", "sub industry", "niche", "tags", "focus", "sub sector"],
+      "business_model": ["business model", "revenue model", "monetization", "model", "pricing model"],
+      "target_customer": ["target customer", "target customers", "customer", "customers", "target market", "icp", "customer segment", "customer type"],
+      "founded_year": ["founded", "year founded", "founding year", "founded year", "founded date", "founded on", "founding date", "year"],
+      "hq_city": ["city", "hq", "hq city", "headquarters", "headquarters location", "location", "hq location", "based in"],
+      "hq_country": ["country", "hq country", "headquarters country"],
+      "status": ["status", "operating status", "company status", "current status", "state"],
+      "status_date": ["status date", "exit date", "acquired date", "acquisition date", "closed date", "shutdown date", "closed on"],
+      "acquirer": ["acquirer", "acquired by", "buyer", "acquiring company"],
+      "description": ["description", "about", "summary", "one liner", "oneliner", "what they do", "short description", "full description", "pitch"],
+      "total_funding_usd": ["total funding", "total funding amount", "total funding amount usd", "total raised", "funding total", "total amount raised", "cumulative funding", "total funding usd"],
+      "round.stage": ["last funding type", "latest round", "latest funding round", "funding stage", "current stage", "last round", "stage", "round", "last funding round"],
+      "round.announced_date": ["last funding date", "latest round date", "last round date", "funding date"],
+      "round.amount_usd": ["last funding amount", "last funding amount usd", "latest round amount", "last round amount", "last round size", "amount raised", "round size", "amount"],
+      "round.post_money_valuation_usd": ["valuation", "post money valuation", "last valuation", "latest valuation", "post money"],
+      "round.lead_investor_ids": ["lead investors", "lead investor", "led by", "lead"],
+      "round.participant_investor_ids": ["investors", "top 5 investors", "top investors", "investor names", "key investors", "backers", "notable investors"],
+      "company_programs.program_id": ["accelerator", "accelerators", "program", "yc batch program", "incubator"],
+      "company_programs.batch": ["batch", "yc batch", "cohort"]
+    },
+    "funding_rounds": {
+      "round_id": ["round id", "round_id", "deal id"],
+      "company_id": ["company id", "company_id"],
+      "company.name": ["company", "company name", "startup", "startup name", "organization", "organization name", "name"],
+      "company.category": ["category", "industry", "sector", "vertical"],
+      "company.founded_year": ["founded", "year founded"],
+      "company.hq_city": ["location", "city", "hq"],
+      "stage": ["stage", "round", "round type", "funding stage", "series", "funding round", "funding type", "investment type", "round name"],
+      "announced_date": ["date", "announced date", "announced on", "round date", "funding date", "close date", "closed date", "announcement date", "deal date"],
+      "amount_usd": ["amount", "amount raised", "raised", "funding amount", "money raised", "round size", "amount usd", "deal size", "size", "investment amount", "money raised usd"],
+      "post_money_valuation_usd": ["valuation", "post money", "post money valuation", "post valuation", "valuation usd"],
+      "lead_investor_ids": ["lead", "lead investor", "lead investors", "led by", "leads"],
+      "participant_investor_ids": ["investors", "other investors", "participants", "co investors", "investor names", "participating investors", "investor", "all investors"],
+      "confidence": ["confidence", "certainty", "data quality"]
+    },
+    "investors": {
+      "investor_id": ["investor id", "investor_id"],
+      "name": ["name", "investor", "investor name", "firm", "firm name", "fund", "fund name", "vc firm", "organization"],
+      "type": ["type", "investor type", "firm type", "kind"],
+      "website": ["website", "url", "homepage"],
+      "hq_city": ["city", "hq", "location", "headquarters"],
+      "hq_country": ["country"],
+      "focus_categories": ["focus", "focus areas", "sectors", "sector focus", "industries", "thesis", "categories", "focus categories"],
+      "stages": ["stages", "stage", "stage focus", "preferred stages", "investment stage", "investment stages"],
+      "check_size_min_usd": ["min check", "check min", "minimum check", "min check size"],
+      "check_size_max_usd": ["max check", "check max", "maximum check", "max check size"],
+      "check_size_range": ["check size", "check sizes", "typical check", "check size range", "ticket size"],
+      "fund_size_usd": ["fund size", "aum", "assets under management", "fund"]
+    },
+    "programs": {
+      "program_id": ["program id", "program_id"],
+      "name": ["name", "program", "program name", "accelerator", "accelerator name", "studio", "studio name", "incubator"],
+      "type": ["type", "program type", "kind", "model type"],
+      "website": ["website", "url"],
+      "hq_country": ["country", "location"],
+      "investment_usd": ["investment", "investment amount", "check", "standard deal", "funding", "deal", "standard investment", "investment usd"],
+      "equity_pct": ["equity", "equity %", "equity pct", "equity taken", "stake", "equity percent", "equity percentage"],
+      "program_length_weeks": ["length", "duration", "program length", "weeks", "length weeks", "duration weeks"],
+      "cohorts_per_year": ["cohorts per year", "batches per year", "cohorts", "batches"],
+      "avg_batch_size": ["batch size", "cohort size", "companies per batch", "avg batch size"],
+      "support_offered": ["support", "perks", "benefits", "services", "support offered", "resources"],
+      "model_summary": ["model", "model summary", "how it works", "business model", "description"]
+    },
+    "company_programs": {
+      "company_id": ["company id"],
+      "company.name": ["company", "company name", "startup"],
+      "program_id": ["program id"],
+      "program.name": ["program", "accelerator", "program name", "studio"],
+      "batch": ["batch", "cohort"],
+      "year": ["year", "batch year"]
+    },
+    "_provenance": {
+      "source_url": ["source", "source url", "sources", "link", "reference", "citation", "source link", "crunchbase url", "cb url"],
+      "collected_by": ["collected by", "researcher", "added by", "owner", "analyst", "entered by", "author"],
+      "collected_at": ["collected at", "collected", "date added", "research date", "updated", "last updated", "entered on"],
+      "notes": ["notes", "note", "comments", "comment", "remarks"]
+    }
+  },
+  "value_aliases": {
+    "company_status": {
+      "operating": "Active", "active": "Active", "alive": "Active", "live": "Active",
+      "acquired": "Acquired", "was acquired": "Acquired", "merged": "Acquired", "exited": "Acquired", "acquisition": "Acquired",
+      "closed": "Shut Down", "shut down": "Shut Down", "shutdown": "Shut Down", "dead": "Shut Down", "defunct": "Shut Down", "out of business": "Shut Down",
+      "inactive": "Inactive", "dormant": "Inactive", "stealth": "Active",
+      "ipo": "IPO", "public": "IPO", "went public": "IPO"
+    },
+    "investor_type": {
+      "angel": "Angel", "angel investor": "Angel", "individual": "Angel",
+      "syndicate": "Syndicate", "angel group": "Syndicate", "angel network": "Syndicate",
+      "micro vc": "Micro-VC", "microvc": "Micro-VC", "seed fund": "Micro-VC",
+      "vc": "VC", "venture capital": "VC", "venture fund": "VC", "venture capital firm": "VC",
+      "cvc": "Corporate VC", "corporate": "Corporate VC", "corporate venture capital": "Corporate VC", "corporate venture": "Corporate VC",
+      "accelerator": "Accelerator", "incubator": "Accelerator",
+      "studio": "Venture Studio", "venture studio": "Venture Studio", "startup studio": "Venture Studio"
+    },
+    "program_type": {
+      "accelerator": "Accelerator", "incubator": "Incubator", "studio": "Venture Studio", "startup studio": "Venture Studio",
+      "venture studio": "Venture Studio", "university": "University Program", "university program": "University Program"
+    },
+    "business_model": {
+      "saas": "B2B SaaS", "b2b": "B2B SaaS", "subscription": "B2B SaaS", "enterprise saas": "B2B SaaS",
+      "api": "Usage-based API", "usage based": "Usage-based API", "usage": "Usage-based API", "pay as you go": "Usage-based API",
+      "open source": "Open Core", "opensource": "Open Core", "oss": "Open Core",
+      "marketplace": "Marketplace", "b2c": "B2C Subscription", "consumer": "B2C Subscription", "freemium": "B2C Subscription",
+      "services": "Services", "consulting": "Services", "agency": "Services", "hardware": "Hardware", "devices": "Hardware"
+    },
+    "target_customer": {
+      "enterprise": "Enterprise", "enterprises": "Enterprise", "large enterprise": "Enterprise", "b2b": "Enterprise",
+      "smb": "SMB", "smbs": "SMB", "small business": "SMB", "small businesses": "SMB", "mid market": "SMB",
+      "developers": "Developers", "developer": "Developers", "engineers": "Developers", "dev teams": "Developers",
+      "consumers": "Consumers", "consumer": "Consumers", "b2c": "Consumers", "individuals": "Consumers",
+      "government": "Government", "public sector": "Government",
+      "hospitals": "Healthcare Providers", "healthcare": "Healthcare Providers", "providers": "Healthcare Providers", "clinics": "Healthcare Providers",
+      "banks": "Financial Institutions", "financial institutions": "Financial Institutions", "fintechs": "Financial Institutions", "insurers": "Financial Institutions"
+    },
+    "confidence": {"high": "High", "medium": "Medium", "med": "Medium", "low": "Low", "h": "High", "m": "Medium", "l": "Low"},
+    "support": {
+      "mentors": "Mentorship", "mentoring": "Mentorship", "mentorship": "Mentorship", "demo day": "Demo Day", "credits": "Cloud Credits",
+      "cloud credits": "Cloud Credits", "aws credits": "Cloud Credits", "office": "Office Space", "office space": "Office Space", "coworking": "Office Space",
+      "cofounder matching": "Co-founder Matching", "co founder matching": "Co-founder Matching", "shared services": "Shared Services",
+      "recruiting": "Recruiting", "hiring": "Recruiting", "customer intros": "Customer Intros", "intros": "Customer Intros", "follow on": "Follow-on Fund",
+      "follow on fund": "Follow-on Fund"
+    }
+  },
+  "category_keywords": [
+    ["Healthcare AI", ["health", "medical", "clinical", "hospital", "biotech", "pharma", "patient", "diagnos", "drug", "life science"]],
+    ["Cybersecurity AI", ["security", "cyber", "fraud", "identity", "threat", "privacy"]],
+    ["FinTech AI", ["fintech", "financ", "bank", "payment", "insur", "lending", "accounting", "trading", "credit", "wealth"]],
+    ["Developer Tools", ["developer", "devtool", "dev tool", "devops", "code", "coding", "software engineering", "testing", "api platform", "sdk"]],
+    ["AI Infrastructure", ["infrastructure", "infra", "gpu", "compute", "chip", "semiconductor", "mlops", "llmops", "vector", "database", "foundation model", "model training", "inference", "data platform", "cloud"]],
+    ["AI Agents", ["agent", "agentic", "copilot", "assistant", "autonomous", "workflow automation", "automation", "rpa"]],
+    ["Consumer AI", ["consumer", "social", "gaming", "entertainment", "dating", "music", "video", "creator", "personal", "e-commerce", "ecommerce"]],
+    ["Vertical AI", ["vertical", "legal", "law", "real estate", "proptech", "education", "edtech", "retail", "manufacturing", "agri", "logistics", "supply chain", "construction", "energy", "climate", "automotive", "robotics", "hr", "recruit", "marketing", "sales"]],
+    ["Enterprise AI", ["enterprise", "saas", "b2b", "productivity", "analytics", "business intelligence", "customer service", "crm", "knowledge", "search", "artificial intelligence", "machine learning", "generative"]]
+  ]
+}

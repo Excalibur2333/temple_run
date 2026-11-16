@@ -8,10 +8,13 @@ There's no backend and no paid API. The data lives in CSV files in this repo, th
 
 ```
 schema/schema.json        ← single source of truth: tables, columns, allowed values
+schema/import_rules.json  ← how messy Excel headers/values map onto the schema (extend freely)
 data/*.csv                ← the real research data (starts empty: headers only)
+data/excel/ + sources.json← team Excel files the dashboard auto-loads from the repo
 data/sample/*.csv         ← FICTIONAL demo data, shown only while data/ is empty
 scripts/validate.py       ← checks every CSV against the schema (also runs in CI)
-index.html + assets/      ← dashboard: overview, startups, funding, success/failure, investors, programs, import
+index.html + assets/      ← dashboard: insights, startups, funding, success/failure, investors, programs, Excel import
+examples/*.xlsx           ← FICTIONAL messy workbooks to try the importer with
 docs/WORKFLOW.md          ← team roles, 30-day plan, data rules, review process
 docs/DATA_DICTIONARY.md   ← every column explained (generated from the schema)
 ```
@@ -44,6 +47,31 @@ python3 scripts/build_data_dictionary.py
 
 No installs needed: Python 3.9+ standard library. The page loads Chart.js and PapaParse from cdnjs.
 
+## Importing Excel (fastest way to see charts)
+
+Open the **Import Excel** tab and drop one or more `.xlsx / .xls / .csv` files. Any of these work:
+
+- one sheet per table (Startups / Funding Rounds / Investors / Accelerators), in any order and with any reasonable header names
+- a single flat sheet, e.g. a Crunchbase export (`Organization Name`, `Last Funding Type`, `Total Funding Amount`, `Top 5 Investors`…)
+- title rows above the header, Excel dates, `$3.5M`, `500K`, `Amount ($M)` columns, `7%`, `Series-A`, `seed round`, `Q3 2023`
+
+The importer explains how it read every sheet (which column → which field), lists what it cleaned up automatically, and lists what's still
+missing for the official database. The dashboard updates right away. **The import is saved in that browser and auto-loads next time.**
+
+Ways to make it load automatically:
+
+| Where the Excel lives | How |
+|---|---|
+| Your laptop | Drop it once; it stays in this browser (IndexedDB) until you click *Stop using it* |
+| Google Sheets / OneDrive / Dropbox | Paste a public share link on the Import tab with *re-load on every visit* ticked. Google Sheets: *File → Share → Publish to web → .xlsx*. SharePoint often blocks browsers; download and drop instead |
+| The repo (whole team sees it) | Commit it to `data/excel/` and add its path to `excel_files` in `data/sources.json` |
+
+A header the importer doesn't know? Add it to `schema/import_rules.json`. Try it with `examples/example_team_tracker.xlsx`
+or `examples/example_crunchbase_style_export.xlsx` (both fictional).
+
+To make the import part of the official, reviewed dataset, click **Download cleaned workbook** or the per-table CSV buttons, fix what the
+"things to fix" list says (usually `source_url` / `collected_by`), and commit the CSVs to `data/` in a pull request.
+
 ## Adding data
 
 1. Copy the header row of the right `data/*.csv` into a Google Sheet tab (or download a blank template from the **Import / Validate** tab).
@@ -60,7 +88,7 @@ so merged PRs show up after Pages redeploys (about a minute).
 
 ## Roadmap after the MVP
 
-- Google Sheets → CSV sync with a GitHub Action, so researchers never touch git
+- Scheduled GitHub Action that pulls the team's shared workbook and opens a PR with the cleaned CSVs
 - Per-person contribution stats and a review queue
 - Cohort analysis (conversion by founding year / accelerator batch) to correct for young companies
 - Move to SQLite/Postgres + a small admin UI if the data grows past ~10k rows or needs edit history per field

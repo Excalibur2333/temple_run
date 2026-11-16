@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "enums": {
     "category": ["AI Agents", "Enterprise AI", "Healthcare AI", "Cybersecurity AI", "FinTech AI", "Developer Tools", "AI Infrastructure", "Vertical AI", "Consumer AI", "Other"],
     "business_model": ["B2B SaaS", "Usage-based API", "Open Core", "Marketplace", "B2C Subscription", "Services", "Hardware", "Other", "Unknown"],
@@ -36,7 +36,8 @@
         {"name": "status", "type": "enum", "enum": "company_status", "required": true},
         {"name": "status_date", "type": "date", "required": false, "doc": "When status last changed (acquisition / shutdown date)."},
         {"name": "acquirer", "type": "string", "required": false},
-        {"name": "description", "type": "string", "required": false, "doc": "One sentence: what they sell to whom."}
+        {"name": "description", "type": "string", "required": false, "doc": "One sentence: what they sell to whom."},
+        {"name": "total_funding_usd", "type": "number", "min": 0, "required": false, "doc": "Reported total raised (e.g. from a Crunchbase export). The dashboard uses the larger of this and the sum of known rounds."}
       ]
     },
     "investors": {

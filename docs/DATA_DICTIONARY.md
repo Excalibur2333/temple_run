@@ -25,6 +25,7 @@ Primary key: `company_id`
 | `status_date` | date |  | When status last changed (acquisition / shutdown date). |
 | `acquirer` | string |  |  |
 | `description` | string |  | One sentence: what they sell to whom. |
+| `total_funding_usd` | number |  | Range 0–<br>Reported total raised (e.g. from a Crunchbase export). The dashboard uses the larger of this and the sum of known rounds. |
 | `source_url` | url | yes | Public page that backs the row (press release, Crunchbase/PitchBook page, company blog, SEC filing). |
 | `collected_by` | string | yes | GitHub handle or initials of the student who entered the row. |
 | `collected_at` | date | yes | Date the row was researched, YYYY-MM-DD. |

@@ -46,9 +46,10 @@ Targets are guides; adjust in the week 1 check-in once you know the pace (a good
 
 1. Pick a batch from the tracker (GitHub Issues, one issue per batch, e.g. *"YC W24 AI companies 1–25"*). Assign yourself.
 2. Research. Preferred sources, in order: company press release / blog → SEC Form D → reputable press (TechCrunch, Axios Pro Rata) → Crunchbase/PitchBook **public** pages → YC directory / accelerator sites.
-3. Enter rows in the team Google Sheet (one tab per table, header row copied from `data/*.csv`), **or** edit the CSV directly.
-4. Export the tab as CSV → open the dashboard → **Import / Validate** tab → fix every error.
-5. Create a branch `data/<your-name>/<batch>`, replace/append to `data/<table>.csv`, open a PR with the template filled in.
+3. Enter rows in the team workbook (Excel / Google Sheets). Start from the template on the dashboard's **Import Excel** tab, or keep your own layout; the importer maps common header names automatically.
+4. Drop the workbook on the **Import Excel** tab. Check *How each sheet was read*, then fix everything under *things to fix*.
+5. Click the per-table CSV buttons, put the files in `data/` on a branch `data/<your-name>/<batch>`, and open a PR with the template filled in.
+   (The data steward can do this step for the whole team once a day if researchers prefer to stay in Excel.)
 6. CI runs `scripts/validate.py`. Red = fix it. Green = ask a reviewer.
 
 ## 5. Data rules (the ones that matter most)
